@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5526173148987057870}
   - component: {fileID: 5526173148987057857}
   - component: {fileID: 3067632850415637896}
+  - component: {fileID: 7471817255788488973}
   m_Layer: 6
   m_Name: Supercopter
   m_TagString: Untagged
@@ -111,3 +112,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7471817255788488973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5526173148987057871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d941860d159443489628a307a079f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  speed: 0.5
+  closestDistanceFromTarget: 3.5
+  shootCooldown: 5
