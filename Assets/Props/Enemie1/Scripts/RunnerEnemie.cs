@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class RunnerEnemie : MonoBehaviour
 {
-    [SerializeField] private GameObject _target;
+    [SerializeField] private Transform targetTransform;
 
     [Header("Config")]
     public float minSpeed;
@@ -28,19 +29,26 @@ public class RunnerEnemie : MonoBehaviour
     
     private void Update()
     {
-        if (null == _target)
+        if (null == targetTransform)
             return;
         
         _runningState.AddTiming(Time.deltaTime);
 
-        Vector2 direction = _target.transform.position - transform.position;
-        direction.Normalize();
-        transform.Translate(direction * (_speed * _runningState.GetSpeed() * Time.deltaTime));
+        UpdatePosition();
     }
     
-    public void SetTarget(GameObject target)
+    public void SetTarget(Transform target)
     {
-        _target = target;
+        targetTransform = target;
+    }
+    
+    private void UpdatePosition()
+    {
+        var position = transform.position;
+        var xDirection = Utils.GetXDirection(position, targetTransform.position);
+        var newX = position.x + (xDirection * (_speed * _runningState.GetSpeed() * Time.deltaTime));
+            
+        transform.position = new Vector2(newX, position.y);
     }
 }
 
