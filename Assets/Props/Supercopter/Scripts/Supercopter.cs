@@ -15,24 +15,31 @@ namespace Props.Supercopter.Scripts
 
         private void Update()
         {
-            if(!IsAtClosestDistance())
-                UpdatePosition();
+            if (!IsAtClosestDistance())
+            {
+                var xDirection = Utils.GetXDirection(transform.position, targetTransform.position);
+                
+                UpdatePosition(xDirection);
+                UpdateRotation(xDirection);
+            }
         }
 
         private bool IsAtClosestDistance()
         {
             return Math.Abs(transform.position.x - targetTransform.position.x) < closestDistanceFromTarget;
         }
-        
-        
-        
-        private void UpdatePosition()
+
+        private void UpdatePosition(float xDirection)
         {
             var position = transform.position;
-            var xDirection = Utils.GetXDirection(position, targetTransform.position);
             var newX = position.x + (xDirection * (speed * Time.deltaTime));
             
             transform.position = new Vector2(newX, position.y);
+        }
+
+        private void UpdateRotation(float xDirection)
+        {
+            transform.rotation = Utils.GetYRotationFromXDirection(xDirection, transform.rotation);
         }
     }
 }
