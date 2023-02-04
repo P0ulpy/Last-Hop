@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
             AimWithTheRoot(RacineHorizontale.Direction.Left);
         }
 
-        if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             ShootUpTheRoot();
         }
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
             AimWithTheRoot(RacineHorizontale.Direction.Right);
         }
 
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             ShootUpTheRoot();
         }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7674974690717962563}
   m_Layer: 0
   m_Name: racineSpriteVertical
-  m_TagString: Untagged
+  m_TagString: Deflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
