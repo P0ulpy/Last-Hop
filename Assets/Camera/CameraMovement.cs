@@ -16,7 +16,12 @@ public class CameraMovement : MonoBehaviour
 
     private IEnumerator _CorLerpOrthoSizeCamera;
 
-    void Start()
+    private void Awake()
+    {
+        _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(0, 0);
+    }
+
+    private void Start()
     {
         _camera = GetComponent<Camera>();
         _screenShake = GetComponent<ScreenShake>();
@@ -24,49 +29,21 @@ public class CameraMovement : MonoBehaviour
         _originalCameraPosition = transform.position;
         _originalCameraOrthoSize = _camera.orthographicSize;
         _isZooming = false;
-
-        _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(0, 0);
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            ZoomCameraIn(3.0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ZoomCameraOut(3.0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ScreenShake();
-        }
     }
 
     public void ZoomCameraTo(float targetOrthoSize)
     {
-        float duration = targetOrthoSize > _camera.orthographicSize ? _durationZoomOut : _durationZoomIn;
-
-        StopCoroutine(_CorLerpOrthoSizeCamera);
-        _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(targetOrthoSize, duration);
-        StartCoroutine(_CorLerpOrthoSizeCamera);
+        StartZoom(targetOrthoSize, targetOrthoSize > _camera.orthographicSize ? _durationZoomOut : _durationZoomIn);
     }
 
     public void ZoomCameraIn(float orthoSizeToRemove)
     {
-        StopCoroutine(_CorLerpOrthoSizeCamera);
-        _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(_camera.orthographicSize - orthoSizeToRemove, _durationZoomIn);
-        StartCoroutine(_CorLerpOrthoSizeCamera);
+        StartZoom(_camera.orthographicSize - orthoSizeToRemove, _durationZoomIn);
     }
 
     public void ZoomCameraOut(float orthoSizeToAdd)
     {
-        StopCoroutine(_CorLerpOrthoSizeCamera);
-        _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(_camera.orthographicSize + orthoSizeToAdd, _durationZoomOut);
-        StartCoroutine(_CorLerpOrthoSizeCamera);
+        StartZoom(_camera.orthographicSize + orthoSizeToAdd, _durationZoomOut);
     }
 
     public void ScreenShake(float shakeDuration = .5f, float shakeRefreshCooldown = .025f, float maxShakeForce = .8f)
@@ -78,6 +55,15 @@ public class CameraMovement : MonoBehaviour
         }
 
         _screenShake.Shake(shakeDuration, shakeRefreshCooldown, maxShakeForce);
+    }
+
+    private void StartZoom(float orthoSize, float duration)
+    {
+        if(_CorLerpOrthoSizeCamera != null)
+            StopCoroutine(_CorLerpOrthoSizeCamera);
+
+        _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(orthoSize, duration);
+        StartCoroutine(_CorLerpOrthoSizeCamera);
     }
 
     private IEnumerator CorLerpOrthoSizeCamera(float targetOrthoSize, float duration)
