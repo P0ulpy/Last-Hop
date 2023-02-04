@@ -7,16 +7,15 @@ namespace Props.Enemies.Supercopter
     public class Supercopter : BaseEnemy
     {
         [SerializeField] private Transform targetTransform;
-        
+        [SerializeField] private GameObject projectilePrefab;
+
         [Header("Config")]
         [SerializeField] private float speed = 0.5f;
         [SerializeField] private float closestDistanceFromTarget = 3.5f;
         [SerializeField] private float shootCooldown = 5.0f;
 
-        [Header("Shoot config")] 
-        [SerializeField] private GameObject projectilePrefab;
-
         private float _timeSinceLastShoot = 0f;
+        private bool _haveProjectile = false;
 
         private void Update()
         {
@@ -26,16 +25,20 @@ namespace Props.Enemies.Supercopter
                 
                 Move();
             }
-            else
+            else if(!_haveProjectile)
                 Shoot();
         }
 
         private void Shoot()
         {
+            _haveProjectile = true;
+            
             var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<SupercopterProjectile>();
-            projectile.Build(transform, targetTransform);
-
-            _timeSinceLastShoot = 0;
+            projectile.Build(transform, targetTransform, () =>
+            {
+                _haveProjectile = false;
+                _timeSinceLastShoot = 0f;
+            });
         }
 
         private void Move()
