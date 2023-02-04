@@ -11,7 +11,7 @@ public class RacineVerticale : MonoBehaviour
 
     [SerializeField] private SpriteRenderer _rootSprite;
 
-   
+
     public float duration;
     private bool stopUpdate = false;
     private enum Direction {Up, Down};
@@ -35,6 +35,9 @@ public class RacineVerticale : MonoBehaviour
         screensBounds =
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         Initialise(Direction.Up);
+        
+        //Spawn Virage
+        
     }
     
     

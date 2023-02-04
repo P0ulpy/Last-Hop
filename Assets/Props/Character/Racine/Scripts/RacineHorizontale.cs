@@ -50,6 +50,7 @@ public class RacineHorizontale : MonoBehaviour
     {
         lastLocation = _Mask.transform.localPosition;
         Stop = true;
+        //Instantiate(_rootVirage, _Mask.transform.position, Quaternion.identity);
         var racineVerticalevar = Instantiate(racineVerticale, new Vector3(_Mask.transform.position.x ,hauteur,0) , Quaternion.identity)
             .GetComponent<RacineVerticale>();
         

@@ -4,7 +4,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private ProgressBar healthBar;
-    [SerializeField] private ProgressBarCooldown cooldownShoot;
+    [SerializeField] private ProgressBarCooldown cooldownShootRight;
+    [SerializeField] private ProgressBarCooldown cooldownShootLeft;
     [SerializeField] private GameObject rootPrefab;
     
     [Header("Regen")]
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (cooldownShoot.IsInCooldown)return;
+            if (cooldownShootLeft.IsInCooldown)return;
             AimWithTheRoot(RacineHorizontale.Direction.Left);
             hasShot = true;
         }
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (cooldownShoot.IsInCooldown)return;
+            if (cooldownShootRight.IsInCooldown)return;
             AimWithTheRoot(RacineHorizontale.Direction.Right);
             hasShot = true;
         }
@@ -98,7 +99,9 @@ public class Player : MonoBehaviour
     }
     public void AimWithTheRoot(RacineHorizontale.Direction dir)
     {
-        cooldownShoot.StartCooldown();
+        if (dir == RacineHorizontale.Direction.Left) cooldownShootLeft.StartCooldown();
+        else if (dir == RacineHorizontale.Direction.Right) cooldownShootRight.StartCooldown();
+
         rootPrefabInstance = Instantiate(rootPrefab);
             var racineVerticalScript = rootPrefabInstance.GetComponent<RacineHorizontale>();
             racineVerticalScript.StartAiming(dir);
