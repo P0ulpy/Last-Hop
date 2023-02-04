@@ -13,17 +13,46 @@ namespace Props.Supercopter.Scripts
         [SerializeField] private float closestDistanceFromTarget = 3.5f;
         [SerializeField] private float shootCooldown = 5.0f;
 
+        [Header("Shoot config")] 
+        [SerializeField] private GameObject projectilePrefab;
+
+        private float _timeSinceLastShoot = 0f;
+
         private void Update()
         {
-            if (!IsAtClosestDistance())
+            /*if (_timeSinceLastShoot <= shootCooldown)
             {
-                var xDirection = Utils.GetXDirection(transform.position, targetTransform.position);
+                _timeSinceLastShoot += Time.deltaTime;
                 
-                UpdatePosition(xDirection);
-                UpdateRotation(xDirection);
+                Move();
+            }
+            else
+                Shoot();*/
+            
+            Move();
+            Shoot();
+        }
+
+        private void Shoot()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<SupercopterProjectile>();
+                projectile.Build(transform, targetTransform);
             }
         }
 
+        private void Move()
+        {
+            if (IsAtClosestDistance())
+                return;
+                
+            var xDirection = Utils.GetXDirection(transform.position, targetTransform.position);
+            
+            UpdatePosition(xDirection);
+            UpdateRotation(xDirection);
+        }
+        
         private bool IsAtClosestDistance()
         {
             return Math.Abs(transform.position.x - targetTransform.position.x) < closestDistanceFromTarget;
