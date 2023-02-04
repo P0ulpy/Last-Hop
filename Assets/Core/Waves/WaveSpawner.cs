@@ -7,19 +7,6 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public enum EnemyType // TODO : Replace this by real Enemy class
-    {
-        LesFDPQuiCourts,
-        LesFDPQuiTirent,
-        LesDronesDeFDP
-    }
-
-    public class Enemy // TODO : Replace this by real Enemy class
-    {
-        public EnemyType type;
-    }; 
-
-
     [System.Serializable]
     public class EnemyAndSpawnParameters
     {
@@ -39,7 +26,7 @@ public class WaveSpawner : MonoBehaviour
     [System.Serializable]
     public class SpawnPointsByCategory
     {
-        public EnemyType[] enemiesSpawningIntoIt;
+        public BaseEnemy.EnemyTypes[] enemiesSpawningIntoIt;
         public Transform[] allTransforms;
     }
 
@@ -107,7 +94,7 @@ public class WaveSpawner : MonoBehaviour
             GameObject randomEnemy = enemies[randomEnemyIndex];
             enemies.RemoveAt(randomEnemyIndex);
 
-            Transform randomSpotToSpawn = GetRandomSpawnPoint(randomEnemy.GetComponent<Enemy>());
+            Transform randomSpotToSpawn = GetRandomSpawnPoint(randomEnemy.GetComponent<BaseEnemy>());
             Instantiate(randomEnemy, randomSpotToSpawn.position, randomSpotToSpawn.rotation);
 
             //Détection de la fin de la vague
@@ -138,7 +125,7 @@ public class WaveSpawner : MonoBehaviour
             }
             else//S'il n'y en a plus
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 Debug.Log("gg la street t'as gagné");
             }
         }
@@ -150,17 +137,17 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
     }
 
-    private Transform GetRandomSpawnPoint(Enemy enemyToSpawn)
+    private Transform GetRandomSpawnPoint(BaseEnemy enemyToSpawn)
     {
-        switch (enemyToSpawn.type)
+        switch (enemyToSpawn.EnemyType)
         {
-            case EnemyType.LesFDPQuiCourts:
+            case BaseEnemy.EnemyTypes.LesFDPQuiCourts:
                 return _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)];
 
-            case EnemyType.LesFDPQuiTirent:
+            case BaseEnemy.EnemyTypes.LesFDPQuiTirent:
                 return _windowsSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _windowsSpawnPoints.allTransforms.Length)];
 
-            case EnemyType.LesDronesDeFDP:
+            case BaseEnemy.EnemyTypes.LesDronesDeFDP:
                 return _skySpawnPoints.allTransforms[UnityEngine.Random.Range(0, _skySpawnPoints.allTransforms.Length)];
 
             default:

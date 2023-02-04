@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4754151502074098476}
   m_Layer: 0
   m_Name: Shooter
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00e12c13b7a1c444819d5ca63d3886b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 1
   targetTransform: {fileID: 0}
   prefabBullet: {fileID: 9005946452728089297, guid: f8d780770f2bc624388b509209ab28c4, type: 3}
   shootFrequency: 5

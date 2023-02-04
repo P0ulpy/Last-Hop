@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class RunnerEnemie : MonoBehaviour
+public class RunnerEnemie : BaseEnemy
 {
     [SerializeField] private Transform targetTransform;
 

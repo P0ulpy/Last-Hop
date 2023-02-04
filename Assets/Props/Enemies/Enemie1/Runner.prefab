@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2859647899942972505}
   m_Layer: 6
   m_Name: Runner
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5c755a4f8f9de4d9166de5c5a611e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 0
   targetTransform: {fileID: 0}
   speedRange: {x: 0.5, y: 1.5}
   timingRunRange: {x: 4, y: 8}

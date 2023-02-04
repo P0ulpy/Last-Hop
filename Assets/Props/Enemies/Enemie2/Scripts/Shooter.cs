@@ -6,7 +6,7 @@ using UnityEngine;
 
 using Prefab = UnityEngine.GameObject;
 
-public class Shooter : MonoBehaviour
+public class Shooter : BaseEnemy
 {
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Prefab prefabBullet;
