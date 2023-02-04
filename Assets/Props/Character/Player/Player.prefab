@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8522307763117853201}
-  root: {fileID: 707921485004174474, guid: c106755750395a441ae81d25f42b5451, type: 3}
+  rootPrefab: {fileID: 1424768619967429185, guid: c106755750395a441ae81d25f42b5451, type: 3}
 --- !u!1 &3821976648246414909
 GameObject:
   m_ObjectHideFlags: 0
