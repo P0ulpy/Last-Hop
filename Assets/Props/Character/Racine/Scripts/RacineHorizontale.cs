@@ -14,66 +14,42 @@ public class RacineHorizontale : MonoBehaviour
     [SerializeField] private SpriteRenderer _rootSprite;
     [SerializeField] private GameObject _Mask;
 
-    private int sideSign = 0;
-    private float offset = 0;
-    private bool begin = true;
-    private bool Stop = false;
-    private Vector3 m_startOfRoot = new Vector3(0, 0, 0);
     public float speed = 6;
     public float hauteur = -1;
-
+    public float durationComeBack = 2f;
+    
+    
+    private bool returning = false;
+    private Vector3 lastLocation;
+    private Vector3 firstLocation;
+    private bool begin = true;
+    private bool Stop = false;
+    private float time;
     private Vector2 screensBounds;
     private float startPositionX;
-    
-    //temp
     private bool canMoveNow = false;
+    //temp
+   
     // Update is called once per frame
 
     private void Awake()
     {
         screensBounds =
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-       
-    }
-
-    private void LateUpdate()
-    {
-
+        time = 0;
     }
 
     void Update()
     {
-        if (begin)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            { 
-                StartAiming(Direction.Left); 
-                begin = false;
-                canMoveNow = true;
-            }
-        
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                StartAiming(Direction.Right);
-                begin = false;
-                canMoveNow = true;
-            } 
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StopAimingThenShoot();
-            begin = false;
-        }
-        
-        
+        if (returning) Reset();
         if (!Stop && canMoveNow) Move();
     }
-
-    public void Move()
+    
+    private void Move()
     {
-        _Mask.transform.localPosition = new Vector3(_Mask.transform.localPosition.x + (sideSign * speed * Time.deltaTime), 0, 0);
-
+        //
+        _Mask.transform.localPosition = new Vector3(_Mask.transform.localPosition.x + ( speed * Time.deltaTime), 0, 0);
+        
         if (Mathf.Abs(_Mask.transform.position.x) > Mathf.Abs(startPositionX + screensBounds.x))
         {
             StopAimingThenShoot();
@@ -81,30 +57,39 @@ public class RacineHorizontale : MonoBehaviour
     }
     public void StopAimingThenShoot()
     {
+        lastLocation = _Mask.transform.localPosition;
         Stop = true;
-        
-        Instantiate(racineVerticale, new Vector3(_Mask.transform.position.x ,hauteur,0) , Quaternion.identity);
+        var racineVerticalevar = Instantiate(racineVerticale, new Vector3(_Mask.transform.position.x ,hauteur,0) , Quaternion.identity)
+            .GetComponent<RacineVerticale>();
+        racineVerticalevar.OnRetract += () =>
+        {
+            Destroy(racineVerticalevar.gameObject);
+            returning = true;
+        };
+
+    }
+
+    private void Reset()
+    {
+        _Mask.transform.localPosition = Vector3.Lerp(lastLocation, firstLocation, time / durationComeBack);
+        time += Time.deltaTime;
+        if (time >= durationComeBack) Destroy(this.gameObject);
     }
 
     public void StartAiming(Direction myDir)
     {
         if (myDir == Direction.Right)
         {
-            m_startOfRoot = new Vector3((_rootSprite.bounds.size.x / 2), hauteur, 0);
-            offset = -_rootSprite.bounds.size.x;
-            sideSign = 1;
+            canMoveNow = true;
         }
         else if(myDir == Direction.Left)
         {
-            m_startOfRoot = new Vector3(-(_rootSprite.bounds.size.x / 2), hauteur, 0);
-            offset = 0;
-            sideSign = -1;
-            _Mask.transform.Rotate(new Vector3(0,0,180));
-            _Mask.transform.localPosition =
-                new Vector3(_Mask.transform.localPosition.x + _rootSprite.bounds.size.x, hauteur, 0);
+            transform.Rotate(new Vector3(0,0,180));
+            canMoveNow = true;
         }
-        this.transform.position = new Vector3(m_startOfRoot.x,hauteur,0); 
+        this.transform.position = new Vector3(0,hauteur,0); 
         startPositionX = _Mask.transform.localPosition.x + transform.position.x;
+        firstLocation = new Vector3(startPositionX, hauteur, 0);
     }
 
     

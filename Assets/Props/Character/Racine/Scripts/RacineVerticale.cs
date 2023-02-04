@@ -3,51 +3,88 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 
 public class RacineVerticale : MonoBehaviour
 {
 
     [SerializeField] private SpriteRenderer _rootSprite;
-    
-    
-    public float speed = 5;
-    public float hauteur = 0;
-    public float offsetY = 1;
-    public float hauteurMax = 18;
-    
-    private bool Stop = false;
-    private Vector2 m_startOfRoot = new Vector3(0, 0, 0);
-    private float Spawnx = 0.0f;
+
+   
+    public float duration;
+    private bool stopUpdate = false;
+    private enum Direction {Up, Down};
     private Vector3 startVector;
     private Vector3 endVector;
+    private Vector3 firstPosition;
+    private Vector3 lastPosition;
     private float time;
-    public float duration;
+    private bool hasReset = false;
+    private Vector2 screensBounds;
+    
+    
+    
 
-
+    public event UnityAction OnRetract;
+    
     private void Awake()
     {
-        m_startOfRoot = new Vector3(0, (_rootSprite.bounds.size.y / 2) + hauteur, 0);
         transform.position = new Vector3(transform.position.x, -(_rootSprite.bounds.size.y / 2) , 0);
-
+        firstPosition = transform.position;
+        screensBounds =
+            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        Initialise(Direction.Up);
     }
-
-    private void Start()
+    
+    
+    private void Initialise(Direction dir)
     {
-        startVector = transform.position;
-        endVector = new Vector3(transform.position.x, transform.position.y + hauteurMax, transform.position.z);
+        
+        if (dir == Direction.Up)
+        {
+            Debug.Log("Up");
+            startVector = transform.position ;
+            endVector = new Vector3(transform.position.x, (Mathf.Abs(screensBounds.y) - _rootSprite.bounds.size.y / 2 ), transform.position.z);
+        }
+        if(dir == Direction.Down)
+        {
+            Debug.Log("Down");
+            startVector = lastPosition ;
+            endVector = firstPosition;
+        }
+        
         time = 0;
-        duration = 1;
     }
+    
 
     // Update is called once per frame
     void Update()
     {
+        if (stopUpdate) return;
         transform.position = Vector3.Lerp(startVector, endVector, time / duration);
         time += Time.deltaTime;
+        if (time >= duration)
+        {
+            if (hasReset)End();
+            Reset();
+        }
+    }
+
+    private void End()
+    {
+        stopUpdate = true;
+        //Destroy(this);
+        OnRetract?.Invoke();
     }
     
+
+    private void Reset()
+    {
+        lastPosition = transform.position;
+        Initialise(Direction.Down);
+        hasReset = true;
+    }
 
 
 }
