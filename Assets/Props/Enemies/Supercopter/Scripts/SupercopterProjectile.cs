@@ -58,8 +58,9 @@ namespace Props.Enemies.Supercopter
             if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
             {
                 player.TakeDamage(damages);
-                _onHitCallBack?.Invoke();
             }
+            
+            _onHitCallBack?.Invoke();
         }
     }
 }

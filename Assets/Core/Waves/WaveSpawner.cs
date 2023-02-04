@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -97,6 +98,8 @@ public class WaveSpawner : MonoBehaviour
                         // Spawn enemy at random spot
                         enemies.RemoveAt(randomEnemyIndex);
                         BaseEnemy spawnedEnemy = Instantiate(randomEnemy, randomSpotToSpawn, Quaternion.identity);
+                        
+                        spawnedEnemy.SetTarget(GameManager.Instance.GetPlayerTransform());
 
                         OnWaveAddEnemy(randomSpotToSpawn);
 

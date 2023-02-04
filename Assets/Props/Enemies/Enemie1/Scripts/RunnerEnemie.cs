@@ -8,8 +8,6 @@ using Random = UnityEngine.Random;
 
 public class RunnerEnemie : BaseEnemy
 {
-    [SerializeField] private Transform targetTransform;
-
     [Header("Config")] 
     public Vector2 speedRange;
     public Vector2 timingRunRange;
@@ -31,23 +29,18 @@ public class RunnerEnemie : BaseEnemy
     
     private void Update()
     {
-        if (null == targetTransform)
+        if (null == _targetTransform)
             return;
         
         _runningState.AddTiming(Time.deltaTime);
 
         UpdatePosition();
     }
-    
-    public void SetTarget(Transform target)
-    {
-        targetTransform = target;
-    }
-    
+
     private void UpdatePosition()
     {
         var position = transform.position;
-        var xDirection = Utils.GetXDirection(position, targetTransform.position);
+        var xDirection = Utils.GetXDirection(position, _targetTransform.position);
         var newX = position.x + (xDirection * (_speed * _runningState.GetSpeed() * Time.deltaTime));
             
         transform.position = new Vector2(newX, position.y);

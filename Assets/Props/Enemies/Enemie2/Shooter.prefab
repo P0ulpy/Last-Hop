@@ -101,3 +101,4 @@ MonoBehaviour:
   targetTransform: {fileID: 0}
   prefabBullet: {fileID: 9005946452728089297, guid: f8d780770f2bc624388b509209ab28c4, type: 3}
   shootFrequency: 5
+  shootFrequencyRange: {x: 4, y: 6}

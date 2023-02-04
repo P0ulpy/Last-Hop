@@ -6,7 +6,6 @@ namespace Props.Enemies.Supercopter
 {
     public class Supercopter : BaseEnemy
     {
-        [SerializeField] private Transform targetTransform;
         [SerializeField] private GameObject projectilePrefab;
 
         [Header("Config")]
@@ -19,6 +18,9 @@ namespace Props.Enemies.Supercopter
 
         private void Update()
         {
+            if(_targetTransform == null)
+                return;
+            
             if (_timeSinceLastShoot <= shootCooldown)
             {
                 _timeSinceLastShoot += Time.deltaTime;
@@ -34,7 +36,7 @@ namespace Props.Enemies.Supercopter
             _haveProjectile = true;
             
             var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<SupercopterProjectile>();
-            projectile.Build(transform, targetTransform, () =>
+            projectile.Build(transform, _targetTransform, () =>
             {
                 _haveProjectile = false;
                 _timeSinceLastShoot = 0f;
@@ -46,7 +48,7 @@ namespace Props.Enemies.Supercopter
             if (IsAtClosestDistance())
                 return;
                 
-            var xDirection = Utils.GetXDirection(transform.position, targetTransform.position);
+            var xDirection = Utils.GetXDirection(transform.position, _targetTransform.position);
             
             UpdatePosition(xDirection);
             UpdateRotation(xDirection);
@@ -54,7 +56,7 @@ namespace Props.Enemies.Supercopter
         
         private bool IsAtClosestDistance()
         {
-            return Math.Abs(transform.position.x - targetTransform.position.x) < closestDistanceFromTarget;
+            return Math.Abs(transform.position.x - _targetTransform.position.x) < closestDistanceFromTarget;
         }
 
         private void UpdatePosition(float xDirection)

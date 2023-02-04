@@ -5,47 +5,56 @@ using Core;
 using UnityEngine;
 
 using Prefab = UnityEngine.GameObject;
+using Random = UnityEngine.Random;
 
 public class Shooter : BaseEnemy
 {
-    [SerializeField] private Transform targetTransform;
     [SerializeField] private Prefab prefabBullet;
     
     [Header("Config")]
     [SerializeField] private float shootFrequency = 5f;
+    [SerializeField] private Vector2 shootFrequencyRange;
     
     private Coroutine _shootCoroutine;
+    private bool IsShooting = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        _shootCoroutine = StartCoroutine(Shoot());
-        
-        if(targetTransform != null)
-            gameObject.transform.rotation = Utils.GetZRotationFromPositions(transform.position, targetTransform.position);
+        shootFrequency = Random.Range(shootFrequencyRange.x, shootFrequencyRange.y);
+
+        if (_targetTransform != null)
+        {
+            gameObject.transform.rotation = Utils.GetZRotationFromPositions(transform.position, _targetTransform.position);
+        }
+    }
+
+    private void Update()
+    {
+        if (!IsShooting)
+        {
+            IsShooting = true;
+            _shootCoroutine = StartCoroutine(Shoot());
+        }
     }
 
     protected override void OnDestroy() 
     {
+
         base.OnDestroy();
+
         StopCoroutine(_shootCoroutine);
     }
 
     IEnumerator Shoot()
     {
-        if (targetTransform == null)
+        if (_targetTransform == null)
             yield return Shoot();
         
         var bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().SetTarget(targetTransform);
+        bullet.GetComponent<Bullet>().Build(transform, _targetTransform);
 
         yield return new WaitForSeconds(shootFrequency);
         yield return Shoot();
-    }
-
-    public void SetTarget(Transform target)
-    {
-        targetTransform = target;
-        gameObject.transform.LookAt(targetTransform);
     }
 }

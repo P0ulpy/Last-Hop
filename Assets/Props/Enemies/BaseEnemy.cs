@@ -12,10 +12,16 @@ public class BaseEnemy : MonoBehaviour
     }
 
     [SerializeField] private EnemyTypes _enemyType;
+    [SerializeField] protected Transform _targetTransform;
     public EnemyTypes EnemyType => _enemyType;
 
     public event UnityAction OnDeathCallback;
 
+    public void SetTarget(Transform targetTransform)
+    {
+        this._targetTransform = targetTransform;
+    }
+    
     virtual protected void OnDestroy()
     {
         OnDeathCallback?.Invoke();
