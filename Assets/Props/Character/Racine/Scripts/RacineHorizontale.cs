@@ -15,7 +15,6 @@ public class RacineHorizontale : MonoBehaviour
     private bool returning = false;
     private Vector3 lastLocation;
     private Vector3 firstLocation;
-    private bool begin = true;
     private bool Stop = false;
     private float time;
     private Vector2 screensBounds;

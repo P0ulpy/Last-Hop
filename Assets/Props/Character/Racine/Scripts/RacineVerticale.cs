@@ -43,13 +43,11 @@ public class RacineVerticale : MonoBehaviour
         
         if (dir == Direction.Up)
         {
-            Debug.Log("Up");
             startVector = transform.position ;
             endVector = new Vector3(transform.position.x, (Mathf.Abs(screensBounds.y) - _rootSprite.bounds.size.y / 2 ), transform.position.z);
         }
         if(dir == Direction.Down)
         {
-            Debug.Log("Down");
             startVector = lastPosition ;
             endVector = firstPosition;
         }
@@ -74,7 +72,6 @@ public class RacineVerticale : MonoBehaviour
     private void End()
     {
         stopUpdate = true;
-        //Destroy(this);
         OnRetract?.Invoke();
     }
     
