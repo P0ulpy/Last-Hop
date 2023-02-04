@@ -54,10 +54,12 @@ public class Player : MonoBehaviour
             ShootUpTheRoot();
         }
         
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             StartRegen();
         }
+#endif
 
         if (isRegen)
         {
