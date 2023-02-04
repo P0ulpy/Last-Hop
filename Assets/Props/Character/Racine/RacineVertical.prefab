@@ -49,6 +49,8 @@ MonoBehaviour:
   speed: 20
   hauteur: 0
   offsetY: 1
+  hauteurMax: 18
+  duration: 1
 --- !u!1 &4770732027149905611
 GameObject:
   m_ObjectHideFlags: 0
