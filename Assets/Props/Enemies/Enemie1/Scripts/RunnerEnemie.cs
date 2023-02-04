@@ -56,6 +56,11 @@ public class RunnerEnemie : BaseEnemy
             player.TakeDamage(damage);
             Destroy(gameObject);
         }
+        
+        if (col.CompareTag("Damager"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
 

@@ -52,4 +52,12 @@ public class Shooter : BaseEnemy
             Destroy(bullet.gameObject);
         });
     }
+    
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Damager"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
