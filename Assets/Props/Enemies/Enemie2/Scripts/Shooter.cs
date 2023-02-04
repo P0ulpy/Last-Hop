@@ -25,8 +25,9 @@ public class Shooter : BaseEnemy
             gameObject.transform.rotation = Utils.GetZRotationFromPositions(transform.position, targetTransform.position);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy() 
     {
+        base.OnDestroy();
         StopCoroutine(_shootCoroutine);
     }
 

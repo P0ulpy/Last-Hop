@@ -1,30 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
     [System.Serializable]
-    public class EnemyAndSpawnParameters
-    {
-        public GameObject enemy;
-        public int numberOfEnemies;
-    }
-
-    [System.Serializable]
-    public class Wave
-    {
-        public EnemyAndSpawnParameters[] enemiesAndSpawnParameters;
-        public Vector2 minMaxTimeBetweenSpawns;
-        public float timeBeforeStartingWave;
-        public float orthoSizeToZoomOutAtStart;
-    }
-
-    [System.Serializable]
-    public class SpawnPointsByCategory
+    public class SpawnPointsByEnemyTypes
     {
         public BaseEnemy.EnemyTypes[] enemiesSpawningIntoIt;
         public Transform[] allTransforms;
@@ -35,24 +16,32 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private CameraMovement _cameraMovement;
 
     [Header("Spawn points")]
-    [SerializeField] private SpawnPointsByCategory _groundSpawnPoints;
-    [SerializeField] private SpawnPointsByCategory _windowsSpawnPoints;
-    [SerializeField] private SpawnPointsByCategory _skySpawnPoints;
+    [SerializeField] private SpawnPointsByEnemyTypes _groundSpawnPoints;
+    [SerializeField] private SpawnPointsByEnemyTypes _windowsSpawnPoints;
+    [SerializeField] private SpawnPointsByEnemyTypes _skySpawnPoints;
 
     [Header("Reset to 0 when shipping")]
     [SerializeField] private int _waveIndexToStart = 0;
-
-    // TODO : Enregistrer points spawn dans liste, tester à chaque spawn si point courant est déjà occupé, sinon en prendre un autre.
-    // Si tous prit, pas de spawn.
-    // Peut avoir nombre mob max à l'écran
 
     private Wave _currentWave;
     private int _currentWaveIndex;
     private bool _finishedSpawning;
 
-    private void Start()
+    private List<Vector3> _allWindowsPointsOccupied;
+
+    private void Awake()
     {
         _currentWaveIndex = _waveIndexToStart;
+
+        _allWindowsPointsOccupied = new List<Vector3>();
+    }
+
+    private void Start()
+    {
+        foreach (var wave in _waves)
+        {
+            wave.Init();
+        }
 
         StartFirstWave();
     }
@@ -84,41 +73,54 @@ public class WaveSpawner : MonoBehaviour
     private IEnumerator SpawnCurrentWave()
     {
         //Récupérer tous les ennmis dans une liste.
-        List<GameObject> enemies = GetAllEnemiesOfCurrentWave();
+        List<BaseEnemy> enemies = GetAllEnemiesOfCurrentWave();
         int totalOfEnemiesOfCurrentWave = enemies.Count;
 
         for (int i = 0; i < totalOfEnemiesOfCurrentWave ; i++)
         {
-            //if(player == null)
-            //{//S'il est mort, on arrête de spawn de monstres
-            //    yield break;
-            //}
+            bool hasSpawned = false;
 
-            int randomEnemyIndex = UnityEngine.Random.Range(0, enemies.Count);
-            GameObject randomEnemy = enemies[randomEnemyIndex];
-            enemies.RemoveAt(randomEnemyIndex);
-
-            Transform randomSpotToSpawn = GetRandomSpawnPoint(randomEnemy.GetComponent<BaseEnemy>());
-            Instantiate(randomEnemy, randomSpotToSpawn.position, randomSpotToSpawn.rotation);
-
-            //Détection de la fin de la vague
-            if(i == totalOfEnemiesOfCurrentWave - 1)
+            while (!hasSpawned)
             {
-                _finishedSpawning = true;
-            }
-            else
-            {
-                _finishedSpawning = false;
-            }
+                if (CanEnemySpawn())
+                {
+                    // Get random enemy from array
+                    int randomEnemyIndex = UnityEngine.Random.Range(0, enemies.Count);
+                    BaseEnemy randomEnemy = enemies[randomEnemyIndex];
 
-            //Attendre le temps qu'il faut entre chaque spawn de monstre
-            yield return new WaitForSeconds(UnityEngine.Random.Range(_currentWave.minMaxTimeBetweenSpawns.x, _currentWave.minMaxTimeBetweenSpawns.y));
+                    // Get random spot to spawn enemy
+                    Vector3 randomSpotToSpawn;
+                    bool hasFoundSucceed = GetRandomSpawnPoint(randomEnemy.EnemyType, out randomSpotToSpawn);
+
+                    if (hasFoundSucceed)
+                    {
+                        // Spawn enemy at random spot
+                        enemies.RemoveAt(randomEnemyIndex);
+                        BaseEnemy spawnedEnemy = Instantiate(randomEnemy, randomSpotToSpawn, Quaternion.identity);
+
+                        OnWaveAddEnemy(randomSpotToSpawn);
+
+                        // On player death
+                        spawnedEnemy.OnDeathCallback += () =>
+                        {
+                            OnWaveRemoveEnemy(randomSpotToSpawn);
+                        };
+
+                        //Détection de la fin de la vague
+                        _finishedSpawning = i == totalOfEnemiesOfCurrentWave - 1;
+                        hasSpawned = true;
+                    }
+                }
+
+                //Attendre le temps qu'il faut entre chaque spawn de monstre
+                yield return new WaitForSeconds(UnityEngine.Random.Range(_currentWave.minMaxTimeBetweenSpawns.x, _currentWave.minMaxTimeBetweenSpawns.y));
+            }
         }
     }
 
     private void Update()
     {
-        if (_finishedSpawning == true && GameObject.FindGameObjectsWithTag("Enemy").Length == 0) // Very ugly, what can I do
+        if (_finishedSpawning && _currentWave.CurrentDeadEnemies >= _currentWave.NumEnemies)
         {
             _finishedSpawning = false; //Si on a finit la vague, on setup la suivante
 
@@ -141,28 +143,62 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
     }
 
-    private Transform GetRandomSpawnPoint(BaseEnemy enemyToSpawn)
+    /*
+     Returns true if we found a spot to spawn your enemy
+
+     If there is already too much enemies, don't spawn.
+     If an enemy will spawn, try to find a transform until a transform is non occupied.
+        If all types are gone, all spots are occupied, we can't spawn anything.
+     */
+    private bool GetRandomSpawnPoint(BaseEnemy.EnemyTypes enemyTypeToSpawn, out Vector3 randomSpawnPoint)
     {
-        switch (enemyToSpawn.EnemyType)
+        randomSpawnPoint = new Vector3();
+
+        // ----
+        switch (enemyTypeToSpawn)
         {
             case BaseEnemy.EnemyTypes.LesFDPQuiCourts:
-                return _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)];
-
-            case BaseEnemy.EnemyTypes.LesFDPQuiTirent:
-                return _windowsSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _windowsSpawnPoints.allTransforms.Length)];
+                randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)].position;
+                return true;
 
             case BaseEnemy.EnemyTypes.LesDronesDeFDP:
-                return _skySpawnPoints.allTransforms[UnityEngine.Random.Range(0, _skySpawnPoints.allTransforms.Length)];
+                randomSpawnPoint = _skySpawnPoints.allTransforms[UnityEngine.Random.Range(0, _skySpawnPoints.allTransforms.Length)].position;
+                return true;
+
+            case BaseEnemy.EnemyTypes.LesFDPQuiTirent:
+                break;
 
             default:
-                Debug.LogWarning("WaveSpawner: Wtf un autre type d'ennemi ?");
-                return _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)];
+                randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)].position;
+                return true;
         }
+
+
+        List<Vector3> tempPositionOccupied = new List<Vector3>();
+
+        for (int i = 0; i < _windowsSpawnPoints.allTransforms.Length; i++)
+        {
+            Vector3 newWindowPosition = _windowsSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _windowsSpawnPoints.allTransforms.Length)].position;
+            
+            if(!tempPositionOccupied     .Contains(newWindowPosition) && 
+               !_allWindowsPointsOccupied.Contains(newWindowPosition))
+            {
+                randomSpawnPoint = newWindowPosition;
+                return true;
+            }
+            else
+            {
+                tempPositionOccupied.Add(newWindowPosition);
+            }
+        }
+        
+        Debug.Log("GetRandomSpawnPoint failed ! No window available, apparently...");
+        return false;
     }
 
-    private List<GameObject> GetAllEnemiesOfCurrentWave()
+    private List<BaseEnemy> GetAllEnemiesOfCurrentWave()
     {
-        List<GameObject> enemies = new List<GameObject>();
+        List<BaseEnemy> enemies = new List<BaseEnemy>();
 
         foreach (var enemiesAndSpawnParameters in _currentWave.enemiesAndSpawnParameters)
         {
@@ -173,5 +209,30 @@ public class WaveSpawner : MonoBehaviour
         }
 
         return enemies;
+    }
+
+    private void OnWaveAddEnemy(Vector3 spawnSpot)
+    {
+        _allWindowsPointsOccupied.Add(spawnSpot);
+        _currentWave.CurrentNumSpawnedEnnemies++;
+    }
+
+    private void OnWaveRemoveEnemy(Vector3 spawnSpot)
+    {
+        _allWindowsPointsOccupied.Remove(spawnSpot);
+        _currentWave.CurrentNumSpawnedEnnemies--;
+        _currentWave.CurrentDeadEnemies++;
+    }
+
+    public bool CanEnemySpawn()
+    {
+        bool canSpawn = _currentWave.CurrentNumSpawnedEnnemies < _currentWave.maxEnemiesSpawned; 
+
+        if(!canSpawn)
+        {
+            Debug.Log("Enemy can't spawn, due to max enemy into wave");
+        }
+
+        return canSpawn;
     }
 }

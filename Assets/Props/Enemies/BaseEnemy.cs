@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -11,4 +13,11 @@ public class BaseEnemy : MonoBehaviour
 
     [SerializeField] private EnemyTypes _enemyType;
     public EnemyTypes EnemyType => _enemyType;
+
+    public event UnityAction OnDeathCallback;
+
+    virtual protected void OnDestroy()
+    {
+        OnDeathCallback?.Invoke();
+    }
 }
