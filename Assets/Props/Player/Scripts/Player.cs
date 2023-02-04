@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int health = 100;
+    [SerializeField] private ProgressBar healthBar;
     
     // Start is called before the first frame update
     void Start()
@@ -34,8 +34,8 @@ public class Player : MonoBehaviour
 
     private void TakeDamage(int damage = 10)
     {
-        health -= damage;
-        if (health <= 0)
+        healthBar.CurrentVal -= damage;
+        if (healthBar.CurrentVal <= 0)
             Destroy(gameObject);
     }
 }

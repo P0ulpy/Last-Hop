@@ -10,11 +10,10 @@ public class RunnerEnemie : MonoBehaviour
 {
     [SerializeField] private Transform targetTransform;
 
-    [Header("Config")]
-    public float minSpeed;
-    public float maxSpeed;
-    public float timingRunMax;
-    public float timingIdleMax;
+    [Header("Config")] 
+    public Vector2 speedRange;
+    public Vector2 timingRunRange;
+    public Vector2 timingIdleRange;
 
     private float _speed;
     private RunningState _runningState;
@@ -22,12 +21,12 @@ public class RunnerEnemie : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        _runningState = new RunningState(timingRunMax, timingIdleMax);
+        _runningState = new RunningState(Random.Range(timingRunRange.x, timingRunRange.y), Random.Range(timingIdleRange.x, timingIdleRange.y));
     }
 
     void Start()
     {
-        _speed = Random.Range(minSpeed, maxSpeed);
+        _speed = Random.Range(speedRange.x, speedRange.y);
     }
     
     private void Update()

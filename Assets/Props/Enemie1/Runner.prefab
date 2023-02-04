@@ -100,10 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
-  minSpeed: 0.5
-  maxSpeed: 1.5
-  timingRunMax: 8
-  timingIdleMax: 3
+  speedRange: {x: 0.5, y: 1.5}
+  timingRunRange: {x: 4, y: 8}
+  timingIdleRange: {x: 1, y: 3}
 --- !u!61 &8600973250835988854
 BoxCollider2D:
   m_ObjectHideFlags: 0
