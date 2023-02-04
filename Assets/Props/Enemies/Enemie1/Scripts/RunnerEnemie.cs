@@ -51,9 +51,9 @@ public class RunnerEnemie : BaseEnemy
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
         {
-            col.gameObject.GetComponent<Player>().TakeDamage(damage);
+            player.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
