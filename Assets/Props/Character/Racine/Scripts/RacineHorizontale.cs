@@ -39,7 +39,6 @@ public class RacineHorizontale : MonoBehaviour
     
     private void Move()
     {
-        //
         _Mask.transform.localPosition = new Vector3(_Mask.transform.localPosition.x + ( speed * Time.deltaTime), 0, 0);
         
         if (Mathf.Abs(_Mask.transform.position.x) > Mathf.Abs(startPositionX + screensBounds.x))

@@ -79,5 +79,13 @@ namespace Props.Enemies.Supercopter
             var vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
             vfx.transform.localScale = transform.localScale / 2;
         }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.CompareTag("Damager"))
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
