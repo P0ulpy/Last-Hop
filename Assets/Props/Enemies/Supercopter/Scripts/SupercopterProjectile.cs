@@ -74,7 +74,7 @@ namespace Props.Enemies.Supercopter
                 player.TakeDamage(damages);
             }
             
-            Instantiate(explosionFx);   
+            Instantiate(explosionFx);
             _onHitCallBack?.Invoke();
         }
     }

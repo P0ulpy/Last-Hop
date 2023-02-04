@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8632699611766532556}
   - component: {fileID: 8632699611766532557}
   - component: {fileID: 8632699611766532546}
-  - component: {fileID: 5649217227121700960}
+  - component: {fileID: 8252536345467827896}
+  - component: {fileID: 127400685319143183}
   m_Layer: 0
-  m_Name: Supercopter-explosion-fx
+  m_Name: Supercopter-explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4879,7 +4880,7 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 0}
---- !u!114 &5649217227121700960
+--- !u!114 &8252536345467827896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4888,10 +4889,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8632699611766532558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdb417b5b43e425090cd0221948854eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 62ec3ee277894d12a7402e8be9176ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 2
+  damages: 20
+--- !u!58 &127400685319143183
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632699611766532558}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &8632699612376867794
 GameObject:
   m_ObjectHideFlags: 0

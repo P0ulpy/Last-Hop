@@ -5,9 +5,9 @@ namespace Core.VFX
 {
     public class VFXLifeTime : MonoBehaviour
     {
-        [SerializeField] private float lifeTime = 3f;
+        [SerializeField] protected float lifeTime = 3f;
 
-        private void Start()
+        protected virtual void Start()
         {
             StartCoroutine(TuNeLeSaitPasEncoreMaisTuEstDejaMort());
         }
