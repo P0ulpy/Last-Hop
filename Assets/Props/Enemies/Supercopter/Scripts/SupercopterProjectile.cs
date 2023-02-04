@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +6,8 @@ namespace Props.Enemies.Supercopter
 {
     public class SupercopterProjectile : MonoBehaviour
     {
+        [SerializeField] private GameObject explosionFx;
+
         [Header("Config")] 
         [SerializeField] private int damages = 20;
         [SerializeField] private float speed = 0.1f;
@@ -26,7 +28,7 @@ namespace Props.Enemies.Supercopter
             _shootOrigin = shooterTransform.position;
             _target = targetTransform.position;
             _onHitCallBack = onHit;
-
+            
             _isInShoot = true;
         }
         
@@ -72,6 +74,7 @@ namespace Props.Enemies.Supercopter
                 player.TakeDamage(damages);
             }
             
+            Instantiate(explosionFx);   
             _onHitCallBack?.Invoke();
         }
     }

@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e33762a481474fac771f1d1295a041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionFx: {fileID: 8632699611766532558, guid: 714b641e34ebe1748acf60c5135b6cf8, type: 3}
   damages: 20
   speed: 0.3
   curveOffset: 5
