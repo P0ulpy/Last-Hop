@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -15,46 +16,69 @@ public class RacineHorizontale : MonoBehaviour
 
     private int sideSign = 0;
     private float offset = 0;
-    private bool Start = true;
+    private bool begin = true;
     private bool Stop = false;
     private Vector3 m_startOfRoot = new Vector3(0, 0, 0);
     public float speed = 6;
     public float hauteur = -1;
+
+    private Vector2 screensBounds;
+    private float startPositionX;
     
+    //temp
+    private bool canMoveNow = false;
     // Update is called once per frame
 
     private void Awake()
     {
-        //  _rootSprite.transform.localScale = new Vector3(_rootSprite.transform.localScale.x * 10, 1, 1);
-      //  speed = 1;
+        screensBounds =
+            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+       
+    }
+
+    private void LateUpdate()
+    {
+
     }
 
     void Update()
     {
-        if (Start)
+        if (begin)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             { 
                 StartAiming(Direction.Left); 
-                Start = false;
+                begin = false;
+                canMoveNow = true;
             }
         
             if (Input.GetKeyDown(KeyCode.D))
             {
                 StartAiming(Direction.Right);
-                Start = false;
+                begin = false;
+                canMoveNow = true;
             } 
         }
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StopAimingThenShoot();
-            Start = false;
+            begin = false;
         }
-
-       if (!Stop) _Mask.transform.localPosition = new Vector3(_Mask.transform.localPosition.x + (sideSign * speed * Time.deltaTime), 0, 0);
+        
+        
+        if (!Stop && canMoveNow) Move();
     }
-    
+
+    public void Move()
+    {
+        _Mask.transform.localPosition = new Vector3(_Mask.transform.localPosition.x + (sideSign * speed * Time.deltaTime), 0, 0);
+
+        if (Mathf.Abs(_Mask.transform.position.x) > Mathf.Abs(startPositionX + screensBounds.x))
+        {
+            StopAimingThenShoot();
+        }
+    }
     public void StopAimingThenShoot()
     {
         Stop = true;
@@ -80,6 +104,7 @@ public class RacineHorizontale : MonoBehaviour
                 new Vector3(_Mask.transform.localPosition.x + _rootSprite.bounds.size.x, hauteur, 0);
         }
         this.transform.position = new Vector3(m_startOfRoot.x,hauteur,0); 
+        startPositionX = _Mask.transform.localPosition.x + transform.position.x;
     }
 
     
