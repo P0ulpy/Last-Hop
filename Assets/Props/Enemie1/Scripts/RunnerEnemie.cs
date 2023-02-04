@@ -20,10 +20,13 @@ public class RunnerEnemie : MonoBehaviour
     private RunningState _runningState;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         _runningState = new RunningState(timingRunMax, timingIdleMax);
+    }
 
+    void Start()
+    {
         _speed = Random.Range(minSpeed, maxSpeed);
     }
     
@@ -49,6 +52,8 @@ public class RunnerEnemie : MonoBehaviour
         var newX = position.x + (xDirection * (_speed * _runningState.GetSpeed() * Time.deltaTime));
             
         transform.position = new Vector2(newX, position.y);
+        
+        transform.rotation = Utils.GetYRotationFromXDirection(xDirection, transform.rotation);
     }
 }
 

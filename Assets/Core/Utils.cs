@@ -20,5 +20,12 @@ namespace Core
                 : new Vector3(rotation.x, -180, rotation.z)
             );
         }
+        
+        public static Quaternion GetZRotationFromPositions(Vector3 positionA, Vector3 positionB)
+        {
+            var direction = (positionB - positionA).normalized;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            return Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 }
