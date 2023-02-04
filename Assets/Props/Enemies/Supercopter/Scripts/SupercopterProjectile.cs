@@ -15,15 +15,16 @@ namespace Props.Enemies.Supercopter
         private bool _isInShoot = false;
         
         private Vector3 _shootOrigin;
-        private Transform _targetTransform;
+        private Vector3 _target;
         private UnityAction _onHitCallBack;
         
         private float _t = 0f;
+        private int _factorDirection = 1;
 
         public void Build(Transform shooterTransform, Transform targetTransform, UnityAction onHit = null)
         {
             _shootOrigin = shooterTransform.position;
-            _targetTransform = targetTransform;
+            _target = targetTransform.position;
             _onHitCallBack = onHit;
 
             _isInShoot = true;
@@ -31,17 +32,28 @@ namespace Props.Enemies.Supercopter
         
         private void Update()
         {
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.O))
+                Deflect();
+#endif
+            
             if (!_isInShoot)
                 return;
             
             Shoot();
         }
 
+        public void Deflect()
+        {
+            _target = _shootOrigin;
+            _factorDirection = -1;
+        }
+
         private void Shoot()
         {
-            _t += speed * Time.deltaTime;
+            _t += speed * _factorDirection * Time.deltaTime;
             
-            var targetPosition = _targetTransform.position;
+            var targetPosition = _target;
 
             float factor = curve.Evaluate(_t);
 
