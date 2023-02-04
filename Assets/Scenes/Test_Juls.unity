@@ -1018,12 +1018,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waves:
   - enemiesAndSpawnParameters:
-    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
-      numberOfEnemies: 10
-    minMaxTimeBetweenSpawns: {x: 1, y: 2}
-    maxEnemiesSpawned: 20
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 2
+    minMaxTimeBetweenSpawns: {x: 2, y: 3}
+    maxEnemiesSpawned: 1
     timeBeforeStartingWave: 0
     orthoSizeToZoomOutAtStart: 0
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 2
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 4
+    minMaxTimeBetweenSpawns: {x: 3, y: 6}
+    maxEnemiesSpawned: 1
+    timeBeforeStartingWave: 3
+    orthoSizeToZoomOutAtStart: 0.5
     CurrentNumSpawnedEnnemies: 0
     CurrentDeadEnemies: 0
   _cameraMovement: {fileID: 1449568964}

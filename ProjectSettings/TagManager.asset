@@ -41,6 +41,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: EnemyBehindBuilding
+    uniqueID: 1006495377
+    locked: 0
+  - name: Building
+    uniqueID: 887335659
+    locked: 0
+  - name: EnemyInFrontOfBuilding
+    uniqueID: 3787604613
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
