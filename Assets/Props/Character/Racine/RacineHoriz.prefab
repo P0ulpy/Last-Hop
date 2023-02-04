@@ -160,7 +160,7 @@ MonoBehaviour:
   racineVerticale: {fileID: 4770732026924570181, guid: b09e114ff7a751f4d8c6651cd2a88c63, type: 3}
   _rootSprite: {fileID: 1424768619760992973}
   _spriteMask: {fileID: 4563092834164100755}
-  speed: 6
+  speed: 8
   hauteur: 0
 --- !u!1 &3215406057182961271
 GameObject:
