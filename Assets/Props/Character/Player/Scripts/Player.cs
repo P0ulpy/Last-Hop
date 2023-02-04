@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,8 +10,6 @@ public class Player : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Projectiles"))
         {
-            //if(col.CompareTag("SupercopterProjectile"))
-                //TakeDamage(20);
             if (col.CompareTag("ShooterProjectile"))
                 TakeDamage(10);
         }
@@ -43,19 +39,17 @@ public class Player : MonoBehaviour
         {
             ShootUpTheRoot();
         }
-
     }
 
     public void ShootUpTheRoot()
     {
-            var racineVerticalScript = rootPrefabInstance.GetComponent<RacineHorizontale>();
-            racineVerticalScript.StopAimingThenShoot();
+        var racineVerticalScript = rootPrefabInstance.GetComponent<RacineHorizontale>();
+        racineVerticalScript?.StopAimingThenShoot();
     }
     public void AimWithTheRoot(RacineHorizontale.Direction dir)
     {
-            rootPrefabInstance = Instantiate(rootPrefab);
-            var racineVerticalScript = rootPrefabInstance.GetComponent<RacineHorizontale>();
-            racineVerticalScript.StartAiming(dir);
+        rootPrefabInstance = Instantiate(rootPrefab);
+        rootPrefabInstance.GetComponent<RacineHorizontale>()?.StartAiming(dir);
     }
     public void TakeDamage(int damage = 10)
     {

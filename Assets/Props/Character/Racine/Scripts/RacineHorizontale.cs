@@ -1,11 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-
-
 
 public class RacineHorizontale : MonoBehaviour
 {
@@ -61,6 +54,7 @@ public class RacineHorizontale : MonoBehaviour
         Stop = true;
         var racineVerticalevar = Instantiate(racineVerticale, new Vector3(_Mask.transform.position.x ,hauteur,0) , Quaternion.identity)
             .GetComponent<RacineVerticale>();
+        
         racineVerticalevar.OnRetract += () =>
         {
             Destroy(racineVerticalevar.gameObject);
@@ -91,7 +85,4 @@ public class RacineHorizontale : MonoBehaviour
         startPositionX = _Mask.transform.localPosition.x + transform.position.x;
         firstLocation = new Vector3(startPositionX, hauteur, 0);
     }
-
-    
-    
 }

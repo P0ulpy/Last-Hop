@@ -85,6 +85,8 @@ namespace Props.Enemies.Supercopter
 
         private void OnTriggerEnter2D(Collider2D col)
         {
+            Debug.Log(col.tag);
+
             if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
             {
                 player.TakeDamage(damages);
