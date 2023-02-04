@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Props.Supercopter.Scripts
+namespace Props.Enemies.Supercopter
 {
     public class SupercopterProjectile : MonoBehaviour
     {
@@ -9,38 +9,30 @@ namespace Props.Supercopter.Scripts
         [SerializeField] private float curveOffset = 5f;
         [SerializeField] private AnimationCurve curve;
 
-        private bool _isOnShoot = false;
+        private bool _isInShoot = false;
         
-        private float _shootDuration = 0f;
         private Transform _shooterTransform;
         private Transform _targetTransform;
 
-        private float _shootTimer = 0f;
-        
         public void Build(Transform shooterTransform, Transform targetTransform)
         {
             _shooterTransform = shooterTransform;
             _targetTransform = targetTransform;
 
-            _shootDuration = 5f;
-            //_shootDuration = Vector3.Distance(_targetTransform.position, _shooterTransform.position) * shootDurationFactor;
-            
-            _isOnShoot = true;
+            _isInShoot = true;
         }
         
         private void Update()
         {
-            if (!_isOnShoot)
+            if (!_isInShoot)
                 return;
-            
-            _shootTimer += Time.deltaTime;
             
             Shoot();
         }
 
         private void Shoot()
         {
-            float t = (_shootTimer / _shootDuration);
+            float t = 0.5f;
 
             var shooterPosition = _shooterTransform.position;
             var targetPosition = _targetTransform.position;

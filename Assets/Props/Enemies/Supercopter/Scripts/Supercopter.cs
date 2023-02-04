@@ -2,9 +2,9 @@
 using Core;
 using UnityEngine;
 
-namespace Props.Supercopter.Scripts
+namespace Props.Enemies.Supercopter
 {
-    public class Supercopter : MonoBehaviour
+    public class Supercopter : BaseEnemy
     {
         [SerializeField] private Transform targetTransform;
         
