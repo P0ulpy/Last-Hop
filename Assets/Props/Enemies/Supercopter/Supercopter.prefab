@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5526173148987057857}
   - component: {fileID: 3067632850415637896}
   - component: {fileID: 7471817255788488973}
+  - component: {fileID: 2489041966683728824}
   m_Layer: 6
   m_Name: Supercopter
   m_TagString: Enemy
@@ -75,9 +76,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 847d7bfc7d9e82049b16aa1d6ea26b33, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e022ba989ffc3094c878a0954cfb4ed6, type: 3}
   m_Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -103,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 4.68, y: 4.68}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -131,3 +132,23 @@ MonoBehaviour:
   closestDistanceFromTarget: 3.5
   shootCooldown: 2
   explosionVFX: {fileID: 1599713672525021199, guid: 920bfadb45bb29647b99e0c35028d104, type: 3}
+--- !u!95 &2489041966683728824
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5526173148987057871}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f9356a1a36b87ad4fb9df795e0e814e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
