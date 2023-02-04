@@ -14,9 +14,9 @@ public class Shooter : BaseEnemy
     [Header("Config")]
     [SerializeField] private float shootFrequency = 5f;
     [SerializeField] private Vector2 shootFrequencyRange;
-    
-    private Coroutine _shootCoroutine;
-    private bool IsShooting = false;
+
+    private float _timeSinceLastShoot = 0f;
+    private bool _haveProjectile = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,30 +31,24 @@ public class Shooter : BaseEnemy
 
     private void Update()
     {
-        if (!IsShooting)
-        {
-            IsShooting = true;
-            _shootCoroutine = StartCoroutine(Shoot());
-        }
-    }
-
-    protected override void OnDestroy() 
-    {
-
-        base.OnDestroy();
-
-        StopCoroutine(_shootCoroutine);
-    }
-
-    IEnumerator Shoot()
-    {
         if (_targetTransform == null)
-            yield return Shoot();
+            return;
+        
+        if(_timeSinceLastShoot <= shootFrequency)
+            _timeSinceLastShoot += Time.deltaTime;
+        else if(!_haveProjectile)
+            Shoot();
+    }
+
+    private void Shoot()
+    {
+        _haveProjectile = true;
         
         var bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Build(transform, _targetTransform);
-
-        yield return new WaitForSeconds(shootFrequency);
-        yield return Shoot();
+        bullet.GetComponent<Bullet>().Build(transform, _targetTransform, () =>
+        {
+            _haveProjectile = false;
+            _timeSinceLastShoot = 0f;
+        });
     }
 }
