@@ -42,6 +42,10 @@ public class WaveSpawner : MonoBehaviour
     [Header("Reset to 0 when shipping")]
     [SerializeField] private int _waveIndexToStart = 0;
 
+    // TODO : Enregistrer points spawn dans liste, tester à chaque spawn si point courant est déjà occupé, sinon en prendre un autre.
+    // Si tous prit, pas de spawn.
+    // Peut avoir nombre mob max à l'écran
+
     private Wave _currentWave;
     private int _currentWaveIndex;
     private bool _finishedSpawning;
