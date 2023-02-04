@@ -21,7 +21,7 @@ public class BaseEnemy : MonoBehaviour
         this._targetTransform = targetTransform;
     }
     
-    virtual protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         OnDeathCallback?.Invoke();
     }

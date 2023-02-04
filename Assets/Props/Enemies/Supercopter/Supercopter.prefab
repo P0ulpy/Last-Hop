@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7471817255788488973}
   m_Layer: 6
   m_Name: Supercopter
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 2
-  targetTransform: {fileID: 0}
+  _targetTransform: {fileID: 0}
+  projectilePrefab: {fileID: 2714652451235909156, guid: b4d4dceae2ab7994f90aefb3c067f808, type: 3}
   speed: 0.5
   closestDistanceFromTarget: 3.5
   shootCooldown: 2
-  projectilePrefab: {fileID: 2714652451235909156, guid: b4d4dceae2ab7994f90aefb3c067f808, type: 3}
+  explosionVFX: {fileID: 1599713672525021199, guid: 920bfadb45bb29647b99e0c35028d104, type: 3}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2236425885348842273}
   - component: {fileID: 1379719178672451121}
   m_Layer: 7
-  m_Name: SupercopterProjectile
+  m_Name: Supercopter-projectile
   m_TagString: SupercopterProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,37 +100,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionFx: {fileID: 8632699611766532558, guid: 714b641e34ebe1748acf60c5135b6cf8, type: 3}
   damages: 20
-  speed: 0.3
-  curveOffset: 5
+  speed: 0.2
+  curveOffset: 8
   curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.048080444
-      value: 0.30031586
-      inSlope: 2.1140194
-      outSlope: 2.1140194
+      time: -0.050582886
+      value: 0.70241547
+      inSlope: -0.13090909
+      outSlope: -0.13090909
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.161884
+      outWeight: 0.10731674
     - serializedVersion: 3
-      time: 0.45588824
-      value: 1.0304021
-      inSlope: -0.01610011
-      outSlope: -0.01610011
+      time: 0.55557865
+      value: 0.5886104
+      inSlope: -0.89264953
+      outSlope: -0.89264953
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.2943964
     - serializedVersion: 3
-      time: 0.99995255
-      value: -0.00027267495
-      inSlope: -3.102034
-      outSlope: -3.102034
+      time: 0.6952234
+      value: 0.4248512
+      inSlope: -1.6254171
+      outSlope: -1.6254171
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.032147374
+      inWeight: 0.050909832
+      outWeight: 0.056478698
+    - serializedVersion: 3
+      time: 0.99995255
+      value: -0.0014933781
+      inSlope: -0.9807765
+      outSlope: -0.9807765
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10721021
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

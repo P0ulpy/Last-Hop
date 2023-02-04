@@ -12,6 +12,7 @@ namespace Props.Enemies.Supercopter
         [SerializeField] private float speed = 0.5f;
         [SerializeField] private float closestDistanceFromTarget = 3.5f;
         [SerializeField] private float shootCooldown = 5.0f;
+        [SerializeField] private GameObject explosionVFX;
 
         private float _timeSinceLastShoot = 0f;
         private bool _haveProjectile = false;
@@ -40,6 +41,7 @@ namespace Props.Enemies.Supercopter
             {
                 _haveProjectile = false;
                 _timeSinceLastShoot = 0f;
+                Destroy(projectile.gameObject);
             });
         }
 
@@ -70,6 +72,12 @@ namespace Props.Enemies.Supercopter
         private void UpdateRotation(float xDirection)
         {
             transform.rotation = Utils.GetYRotationFromXDirection(xDirection, transform.rotation);
+        }
+
+        private void OnDisable()
+        {
+            var vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
+            vfx.transform.localScale = transform.localScale / 2;
         }
     }
 }
