@@ -98,7 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a272a4f0f0d8e04a8a20cb6a9b2534d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionFx: {fileID: 2473356164054945761, guid: 7a4cfc81993a71243bcf24686c635359, type: 3}
   speed: 3
+  damages: 10
 --- !u!58 &5499714570591927076
 CircleCollider2D:
   m_ObjectHideFlags: 0

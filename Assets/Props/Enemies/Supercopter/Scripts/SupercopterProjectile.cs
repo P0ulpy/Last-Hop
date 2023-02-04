@@ -110,4 +110,4 @@ namespace Props.Enemies.Supercopter
             _onHitCallBack?.Invoke();
         }
     }
-}
+   }

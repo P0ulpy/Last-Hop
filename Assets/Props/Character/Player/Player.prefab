@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8522307763117853201}
+  cooldownShoot: {fileID: 5191883665758106201}
   rootPrefab: {fileID: 1424768619967429185, guid: c106755750395a441ae81d25f42b5451, type: 3}
 --- !u!1 &3821976648246414909
 GameObject:

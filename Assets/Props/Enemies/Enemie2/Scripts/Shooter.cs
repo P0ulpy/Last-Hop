@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class Shooter : BaseEnemy
 {
     [SerializeField] private Prefab prefabBullet;
-    
+
     [Header("Config")]
     [SerializeField] private float shootFrequency = 5f;
     [SerializeField] private Vector2 shootFrequencyRange;
@@ -49,6 +49,7 @@ public class Shooter : BaseEnemy
         {
             _haveProjectile = false;
             _timeSinceLastShoot = 0f;
+            Destroy(bullet.gameObject);
         });
     }
 }

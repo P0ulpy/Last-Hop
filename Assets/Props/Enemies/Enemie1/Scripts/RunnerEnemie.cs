@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class RunnerEnemie : BaseEnemy
 {
     [Header("Config")] 
+    [SerializeField] private int damage = 20;
     public Vector2 speedRange;
     public Vector2 timingRunRange;
     public Vector2 timingIdleRange;
@@ -46,6 +47,15 @@ public class RunnerEnemie : BaseEnemy
         transform.position = new Vector2(newX, position.y);
         
         transform.rotation = Utils.GetYRotationFromXDirection(xDirection, transform.rotation);
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            col.gameObject.GetComponent<Player>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }
 

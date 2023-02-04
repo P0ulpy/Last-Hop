@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionFx;
+    
     private Vector3 _shootOrigin;
     private Vector3 _target;
     private UnityAction _onHitCallBack;
@@ -57,7 +59,18 @@ public class Bullet : MonoBehaviour
         {
             player.TakeDamage(damages);
         }
-        
+        if (col.CompareTag("Deflector"))
+        {
+            Deflect();
+            return;
+        }
+
+        Explode();
+    }
+    
+    private void Explode()
+    {
+        Instantiate(explosionFx, transform.position, Quaternion.identity);
         _onHitCallBack?.Invoke();
     }
 }

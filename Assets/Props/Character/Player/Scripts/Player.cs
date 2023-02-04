@@ -8,17 +8,6 @@ public class Player : MonoBehaviour
     
     private GameObject rootPrefabInstance;
     private bool hasShot = false;
-    
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Projectiles"))
-        {
-            if (col.CompareTag("ShooterProjectile"))
-                TakeDamage(10);
-        }
-        else if(col.gameObject.layer == LayerMask.NameToLayer("Enemies"))
-            TakeDamage(15);
-    }
 
     private void Update()
     {
