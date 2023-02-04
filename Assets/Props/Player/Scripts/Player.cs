@@ -23,11 +23,16 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("OnTriggerEnter2D");
-        
-        if(col.gameObject.layer == LayerMask.NameToLayer("Projectiles"))
-            TakeDamage();
+
+        if (col.gameObject.layer == LayerMask.NameToLayer("Projectiles"))
+        {
+            if(col.CompareTag("SupercopterProjectile"))
+                TakeDamage(20);
+            else if (col.CompareTag("ShooterProjectile"))
+                TakeDamage(10);
+        }
         else if(col.gameObject.layer == LayerMask.NameToLayer("Enemies"))
-            TakeDamage(20);
+            TakeDamage(15);
         
         Destroy(col.gameObject);
     }
@@ -35,7 +40,7 @@ public class Player : MonoBehaviour
     private void TakeDamage(int damage = 10)
     {
         healthBar.CurrentVal -= damage;
-        if (healthBar.CurrentVal <= 0)
-            Destroy(gameObject);
+        //if (healthBar.CurrentVal <= 0)
+            //Destroy(gameObject);
     }
 }
