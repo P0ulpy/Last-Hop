@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -6,8 +7,24 @@ public class Player : MonoBehaviour
     [SerializeField] private ProgressBarCooldown cooldownShoot;
     [SerializeField] private GameObject rootPrefab;
     
+    [Header("Regen")]
+    [SerializeField] private float fxStaticTimeMax = 3f;
+    [SerializeField] private float fxTravelTimeMax = 1f;
+    [SerializeField] private GameObject regenPrefab;
+    [SerializeField] private Transform[] regenSpawnPoints;
+    private List<GameObject> fxSpawn;
+    private bool isRegen = false;
+    private float fxStaticTime = 0f;
+    private float fxTravelTime = 0f;
+    
+    
     private GameObject rootPrefabInstance;
     private bool hasShot = false;
+    
+    private void Start()
+    {
+        fxSpawn = new List<GameObject>();
+    }
 
     private void Update()
     {
@@ -36,6 +53,41 @@ public class Player : MonoBehaviour
             if(hasShot)
             ShootUpTheRoot();
         }
+        
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            StartRegen();
+        }
+
+        if (isRegen)
+        {
+            if(fxStaticTime < fxStaticTimeMax)
+                fxStaticTime += Time.deltaTime;
+            else
+            {
+                if(fxTravelTime < fxTravelTimeMax)
+                {
+                    fxTravelTime += Time.deltaTime;
+                    foreach (var fx in fxSpawn)
+                    {
+                        fx.transform.position = Vector3.MoveTowards(fx.transform.position, transform.position, Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    isRegen = false;
+                    fxStaticTime = 0f;
+                    fxTravelTime = 0f;
+                    foreach (var fx in fxSpawn)
+                    {
+                        Destroy(fx);
+                    }
+                    fxSpawn.Clear();
+
+                    healthBar.CurrentVal += healthBar.MaxValue * 0.33f;
+                }
+            }
+        }
     }
 
     public void ShootUpTheRoot()
@@ -57,5 +109,15 @@ public class Player : MonoBehaviour
         healthBar.CurrentVal -= damage;
         //if (healthBar.CurrentVal <= 0)
             //Destroy(gameObject);
+    }
+
+    public void StartRegen()
+    {
+        isRegen = true;
+        foreach (var spawnPoint in regenSpawnPoints)
+        {
+            var fx = Instantiate(regenPrefab, spawnPoint.position, Quaternion.identity);
+            fxSpawn.Add(fx);
+        }
     }
 }
