@@ -20,26 +20,22 @@ namespace Props.Enemies.Supercopter
 
         private void Update()
         {
-            /*if (_timeSinceLastShoot <= shootCooldown)
+            if (_timeSinceLastShoot <= shootCooldown)
             {
                 _timeSinceLastShoot += Time.deltaTime;
                 
                 Move();
             }
             else
-                Shoot();*/
-            
-            Move();
-            Shoot();
+                Shoot();
         }
 
         private void Shoot()
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<SupercopterProjectile>();
-                projectile.Build(transform, targetTransform);
-            }
+            var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<SupercopterProjectile>();
+            projectile.Build(transform, targetTransform);
+
+            _timeSinceLastShoot = 0;
         }
 
         private void Move()

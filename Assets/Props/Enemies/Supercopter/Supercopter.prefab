@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d941860d159443489628a307a079f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 2
   targetTransform: {fileID: 0}
   speed: 0.5
   closestDistanceFromTarget: 3.5

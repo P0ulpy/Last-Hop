@@ -255,7 +255,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1523603918
 Transform:
@@ -447,11 +447,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5526173148987057870, guid: f238f84211caee34681275c227cffeb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.4
+      value: -7.17
       objectReference: {fileID: 0}
     - target: {fileID: 5526173148987057870, guid: f238f84211caee34681275c227cffeb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.87
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 5526173148987057870, guid: f238f84211caee34681275c227cffeb5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -488,10 +488,6 @@ PrefabInstance:
     - target: {fileID: 5526173148987057871, guid: f238f84211caee34681275c227cffeb5, type: 3}
       propertyPath: m_Name
       value: Supercopter
-      objectReference: {fileID: 0}
-    - target: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
-      propertyPath: shootCooldown
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
       propertyPath: targetTransform
