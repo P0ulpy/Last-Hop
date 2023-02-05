@@ -132,6 +132,7 @@ MonoBehaviour:
   closestDistanceFromTarget: 3.5
   shootCooldown: 2
   explosionVFX: {fileID: 1599713672525021199, guid: 920bfadb45bb29647b99e0c35028d104, type: 3}
+  explosionFx: {fileID: 2023475133927521424, guid: 4ca28e3366ac745488ac1867b1caeab0, type: 3}
 --- !u!95 &2489041966683728824
 Animator:
   serializedVersion: 5

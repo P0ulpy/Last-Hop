@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyType: 0
   _targetTransform: {fileID: 0}
+  explosionFx: {fileID: 2023475133927521424, guid: 4ca28e3366ac745488ac1867b1caeab0, type: 3}
   damage: 20
   speedRange: {x: 0.5, y: 1.5}
   timingRunRange: {x: 4, y: 8}

@@ -493,7 +493,7 @@ MonoBehaviour:
   timingShootBulletRange: {x: 2, y: 5}
   timingShootBarrilRange: {x: 6, y: 9}
   timingSwapSizeRange: {x: 60, y: 85}
-  health: 700
+  health: 420
   healthForPhaseTired: 400
   speed: 5
   timingShootBulletRangeTiredNormal: {x: 0.25, y: 0.5}
@@ -504,20 +504,22 @@ MonoBehaviour:
   enemyBuldingPrefabs: {fileID: 4754151502074098477, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
   enemySkyPrefabs: {fileID: 5526173148987057871, guid: f238f84211caee34681275c227cffeb5, type: 3}
   spawnPointsGround:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 458274498}
+  - {fileID: 803116918}
   spawnPointsBulding:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1303397982}
+  - {fileID: 1644545420}
+  - {fileID: 1521489090}
+  - {fileID: 1145586744}
+  - {fileID: 536219012}
   spawnPointsSky:
-  - {fileID: 0}
-  - {fileID: 0}
-  nbrMaxSpawnEnemy: 0
-  objectifEnemyKill: 0
-  timingSpawnEnemyRange: {x: 0, y: 0}
+  - {fileID: 1568047027}
+  - {fileID: 286513543}
+  nbrEnemySpawnGround: 3
+  nbrEnemySpawnBulding: 2
+  nbrEnemySpawnSky: 4
+  objectifEnemyKill: 9
+  timingSpawnEnemyRange: {x: 8, y: 11}
   deplacementPointLeft: {fileID: 900601398}
   deplacementPointRight: {fileID: 44272945}
 --- !u!212 &831578414
