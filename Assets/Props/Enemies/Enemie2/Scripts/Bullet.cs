@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
         var direction = (_target - position).normalized;
         transform.position = position + (direction * (speed * Time.deltaTime));
         
-        if(_target == _shootOrigin && Vector3.Distance(position, _target) < 1f)
+        if(_target == _shootOrigin && Vector3.Distance(position, _target) < 0.1f)
             Explode();
     }
 

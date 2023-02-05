@@ -28,7 +28,9 @@ public class Shooter : BaseEnemy
 
         if (_targetTransform != null)
         {
-            gameObject.transform.rotation = Utils.GetZRotationFromPositions(transform.position, _targetTransform.position);
+            if(Utils.GetXDirection(transform.position, _targetTransform.position) == -1)
+                gameObject.GetComponent<SpriteRenderer>().flipY = true;
+            transform.right = _targetTransform.position - transform.position;
         }
     }
 
