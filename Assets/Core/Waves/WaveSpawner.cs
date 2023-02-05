@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,7 @@ public class WaveSpawner : MonoBehaviour
     public class SpawnPointsByEnemyTypes
     {
         public BaseEnemy.EnemyTypes[] enemiesSpawningIntoIt;
-        public Transform[] allTransforms;
+        public List<Transform> allTransforms;
     }
     
     [Serializable] public class ListTransform
@@ -42,7 +43,7 @@ public class WaveSpawner : MonoBehaviour
     private bool _finishedSpawning;
 
     private readonly List<Vector3> _allWindowsPointsOccupied = new ();
-
+    
     private void Awake()
     {
         _currentWaveIndex = _waveIndexToStart;
@@ -218,27 +219,48 @@ public class WaveSpawner : MonoBehaviour
         switch (enemyTypeToSpawn)
         {
             case BaseEnemy.EnemyTypes.LesFDPQuiCourts:
-                randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)].position;
+                randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Count)].position;
                 return true;
 
             case BaseEnemy.EnemyTypes.LesDronesDeFDP:
-                randomSpawnPoint = _skySpawnPoints.allTransforms[UnityEngine.Random.Range(0, _skySpawnPoints.allTransforms.Length)].position;
+                randomSpawnPoint = _skySpawnPoints.allTransforms[UnityEngine.Random.Range(0, _skySpawnPoints.allTransforms.Count)].position;
                 return true;
 
             case BaseEnemy.EnemyTypes.LesFDPQuiTirent:
                 break;
 
             default:
-                randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Length)].position;
+                randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Count)].position;
                 return true;
         }
 
 
-        List<Vector3> tempPositionOccupied = new List<Vector3>();
+        List<Vector3> tempPositionOccupied = new ();
+        
+        int maxIndex = _windowsSpawnPoints.allTransforms.Count - 1;
+        int index = _currentWaveIndex;
 
-        for (int i = 0; i < _windowsSpawnPoints.allTransforms.Count; i++)
+        if (index > maxIndex)
+            index = _windowsSpawnPoints.allTransforms.Count - 1;
+
+        var availableTransformsByEnemyType = new SpawnPointsByEnemyTypes
         {
-            Vector3 newWindowPosition = _windowsSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _windowsSpawnPoints.allTransforms.Count)].value[0].position;
+            enemiesSpawningIntoIt = _windowsSpawnPoints.enemiesSpawningIntoIt
+        };
+
+        for (int i = 0; i <= index; i++)
+        {
+            var transforms = _windowsSpawnPoints.allTransforms[i];
+            availableTransformsByEnemyType.allTransforms.AddRange(transforms.value);
+        }
+        
+        foreach (var t in availableTransformsByEnemyType.allTransforms)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, availableTransformsByEnemyType.allTransforms.Count);
+            
+            Vector3 newWindowPosition = availableTransformsByEnemyType
+                .allTransforms[randomIndex]
+                .position;
             
             if(!tempPositionOccupied     .Contains(newWindowPosition) && 
                !_allWindowsPointsOccupied.Contains(newWindowPosition))
