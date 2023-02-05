@@ -66,6 +66,10 @@ public class Shooter : BaseEnemy
         {
             Explode();
             Destroy(gameObject);
+        } else if (col.CompareTag("ShooterProjectile"))
+        {
+            Explode();
+            Destroy(gameObject);
         }
     }
     
