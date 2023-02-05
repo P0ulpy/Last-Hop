@@ -23,6 +23,7 @@ public class BaseEnemy : MonoBehaviour
     
     protected virtual void OnDestroy()
     {
+        Core.GameManager.Instance.PlaySoundNormalExplosion();
         OnDeathCallback?.Invoke();
     }
 }

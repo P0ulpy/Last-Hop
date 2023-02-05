@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &265476717557552963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 265476717557552961}
+  - component: {fileID: 265476717557552960}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &265476717557552961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265476717557552963}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &265476717557552960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265476717557552963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ede8eb0c5424dd1a73a7e0551a65730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aeNormalExplosion: {fileID: 11400000, guid: af2ec7ae7514d7946a6c5e3bc9752135, type: 2}
+  aeBigExplosion: {fileID: 11400000, guid: b56d5f49cff76db4cbf9be339302309b, type: 2}
+  aeRacineUnderground: {fileID: 11400000, guid: 88b457a5f1683f84c94c1c384f0d56ed, type: 2}
+  aeRacineUp: {fileID: 11400000, guid: c4d560f3ad225094abd9f6787d3b7dd8, type: 2}
+  aeFeuillesRacines: {fileID: 11400000, guid: 6e4137a04438afc4eb95286d8fd09622, type: 2}
+  aeEnnemiTirBulet: {fileID: 11400000, guid: b42e110ebdaa0924b94464d9dcab7350, type: 2}
+  aeEnnemiTirBomb: {fileID: 11400000, guid: b7cbdc9b95e49cf4fa7030d7381bf07a, type: 2}
+  aeSwoosh: {fileID: 11400000, guid: b36d1e292f85210428bace46c58e147a, type: 2}
+  aeRenvoieProjectile: {fileID: 11400000, guid: 96b5004494c0afb4485df82187781768, type: 2}

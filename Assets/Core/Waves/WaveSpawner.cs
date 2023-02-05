@@ -41,12 +41,13 @@ public class WaveSpawner : MonoBehaviour
     private Wave _currentWave;
     private int _currentWaveIndex;
     private bool _finishedSpawning;
-
+    private GameMusicManager _gameMusicManager;
     private readonly List<Vector3> _allWindowsPointsOccupied = new ();
     
     private void Awake()
     {
         _currentWaveIndex = _waveIndexToStart;
+        _gameMusicManager = FindObjectOfType<GameMusicManager>();
     }
 
     private void Start()
@@ -192,6 +193,7 @@ public class WaveSpawner : MonoBehaviour
             if(_currentWaveIndex + 1 < _waves.Length) //S'il y a encore une vague/des vagues
             {
                 PrepareNextWave();
+                _gameMusicManager.PlayNextMusicAfterCurrentOne();
                 StartCoroutine(StartNextWave(_currentWaveIndex));
             }
             else//S'il n'y en a plus

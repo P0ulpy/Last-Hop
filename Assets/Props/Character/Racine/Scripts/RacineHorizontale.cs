@@ -59,7 +59,10 @@ public class RacineHorizontale : MonoBehaviour
 
         if (explosionGroundFx != null)
             Instantiate(explosionGroundFx, new Vector3(_Mask.transform.position.x, hauteur, 0), explosionGroundFx.transform.rotation);
-        
+
+        Core.GameManager.Instance.PlaySoundRacineUp();
+
+
         racineVerticalevar.OnRetract += () =>
         {
             Destroy(racineVerticalevar.gameObject);
