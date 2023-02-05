@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
@@ -12,6 +13,17 @@ public class WaveSpawner : MonoBehaviour
         public BaseEnemy.EnemyTypes[] enemiesSpawningIntoIt;
         public Transform[] allTransforms;
     }
+    
+    [Serializable] public class ListTransform
+    {
+        public List<Transform> value;
+    }
+    
+    [Serializable] public class CustomSpawnPointsByEnemyTypes
+    {
+        public BaseEnemy.EnemyTypes[] enemiesSpawningIntoIt;
+        public List<ListTransform> allTransforms;
+    }
 
     [Header("General")]
     [SerializeField] private Wave[] _waves;
@@ -19,7 +31,7 @@ public class WaveSpawner : MonoBehaviour
 
     [Header("Spawn points")]
     [SerializeField] private SpawnPointsByEnemyTypes _groundSpawnPoints;
-    [SerializeField] private SpawnPointsByEnemyTypes _windowsSpawnPoints;
+    [SerializeField] private CustomSpawnPointsByEnemyTypes _windowsSpawnPoints;
     [SerializeField] private SpawnPointsByEnemyTypes _skySpawnPoints;
 
     [Header("Reset to 0 when shipping")]
@@ -226,9 +238,9 @@ public class WaveSpawner : MonoBehaviour
 
         List<Vector3> tempPositionOccupied = new List<Vector3>();
 
-        for (int i = 0; i < _windowsSpawnPoints.allTransforms.Length; i++)
+        for (int i = 0; i < _windowsSpawnPoints.allTransforms.Count; i++)
         {
-            Vector3 newWindowPosition = _windowsSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _windowsSpawnPoints.allTransforms.Length)].position;
+            Vector3 newWindowPosition = _windowsSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _windowsSpawnPoints.allTransforms.Count)].value[0].position;
             
             if(!tempPositionOccupied     .Contains(newWindowPosition) && 
                !_allWindowsPointsOccupied.Contains(newWindowPosition))

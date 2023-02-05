@@ -49,6 +49,9 @@ TagManager:
   - name: Background
     uniqueID: 3032342271
     locked: 0
+  - name: BuildingBackground
+    uniqueID: 4288919179
+    locked: 0
   - name: EnemyBehindBuilding
     uniqueID: 1006495377
     locked: 0
