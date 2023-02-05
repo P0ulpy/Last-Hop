@@ -75,7 +75,7 @@ namespace Props.Enemies.Supercopter
             float direction = Utils.GetXDirection(_shootOrigin, _target);
             
             _target = new Vector2(
-                deflectPosition.x - (5 * direction), 
+                deflectPosition.x - (3 * direction), 
                 _target.y - 1.5f
             );
 
@@ -89,18 +89,26 @@ namespace Props.Enemies.Supercopter
             {
                 player.TakeDamage(damages);
             }
-            if (col.CompareTag("Enemy"))
+            else if (col.CompareTag("Enemy"))
             {
                 Explode();
             }
-            if (col.CompareTag("Deflector"))
+            else if (col.CompareTag("Deflector"))
             {
                 if (_isInDeflect) return;
+                
                 Deflect(transform.position);
-                return;
             }
-            if(_isInDeflect)return;
-            Explode();
+            else if (col.CompareTag("Damager"))
+            {
+                if (_isInDeflect) return;
+                
+                Explode();
+            }
+            else
+            {
+                Explode();
+            }
         }
         
         private void Explode()
@@ -109,4 +117,4 @@ namespace Props.Enemies.Supercopter
             _onHitCallBack?.Invoke();
         }
     }
-   }
+}
