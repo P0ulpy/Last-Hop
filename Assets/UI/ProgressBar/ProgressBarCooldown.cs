@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ProgressBarCooldown : ProgressBar
@@ -23,7 +22,7 @@ public class ProgressBarCooldown : ProgressBar
         {
             CurrentVal = MaxValue;
 
-            barFillImage.enabled = true;
+            //barFillImage.enabled = true;
             isInCooldown = true;
 
             StartCoroutine(StartTimerCooldownCoroutine());
@@ -34,7 +33,7 @@ public class ProgressBarCooldown : ProgressBar
     {
         CurrentVal = 0;
 
-        barFillImage.enabled = false;
+        //barFillImage.enabled = false;
         isInCooldown = false;
     }
 
@@ -51,5 +50,10 @@ public class ProgressBarCooldown : ProgressBar
 
             yield return null;
         }
+    }
+
+    protected override void UpdateValue()
+    {
+        barFillImage.fillAmount = Mathf.Lerp(1, 0, currentVal / maxValue);
     }
 }

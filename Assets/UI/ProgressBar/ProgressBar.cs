@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
@@ -12,7 +10,7 @@ public class ProgressBar : MonoBehaviour
     // Set MaxValue to change the max fill amount the bar can go.
     public float MaxValue { get { return maxValue; } set { maxValue = value; } }
 
-    private float currentVal;
+    protected float currentVal;
     public float CurrentVal
     {
         get { return currentVal; }
