@@ -61,27 +61,39 @@ public class WaveSpawner : MonoBehaviour
         if (nextWaveIndex != 0)
         {
             GameManager.Instance.player.StartRegen();
-            AdjustSpawnPointsPositions(_groundSpawnPoints.allTransforms, nextWave.orthoSizeToZoomOutAtStart);
-            AdjustSpawnPointsPositions(_skySpawnPoints.allTransforms, nextWave.orthoSizeToZoomOutAtStart);
+            AdjustSpawnPointsPositions( nextWave.orthoSizeToZoomOutAtStart);
         }
         
         _cameraMovement.ZoomCameraOut(nextWave.orthoSizeToZoomOutAtStart);
     }
 
-    private void AdjustSpawnPointsPositions(IEnumerable<Transform> transforms, float offset)
+    private void AdjustSpawnPointsPositions(float orthoSizeOffset)
     {
-        foreach (var sp in transforms)
+        foreach (var sp in _groundSpawnPoints.allTransforms)
         {
             var spPosition = sp.position;
             
             float direction = - Utils.GetXDirection(spPosition, GameManager.Instance.player.transform.position);
+            float offsetX = (orthoSizeOffset * direction) * 2;
             
             sp.position = new Vector2(
-                spPosition.x + ((offset * direction) * 2),
+                spPosition.x + offsetX,
                 spPosition.y
             );
+        }
+        
+        foreach (var sp in _skySpawnPoints.allTransforms)
+        {
+            var spPosition = sp.position;
             
-            Debug.Log($"{sp.name}, direction({direction}), position({spPosition}), newPosition({sp.position})");
+            float direction = - Utils.GetXDirection(spPosition, GameManager.Instance.player.transform.position);
+            float offsetX = (orthoSizeOffset * direction) * 2;
+            float offsetY = orthoSizeOffset * 2;
+
+            sp.position = new Vector2(
+                spPosition.x + offsetX,
+                spPosition.y + offsetY
+            );
         }
     }
     

@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14861426}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.11652, y: 0.285429, z: 1.1247435}
+  m_LocalPosition: {x: 8.11652, y: -2.3, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -351,7 +351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445726646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8865199, y: -3.1745706, z: 1.1247435}
+  m_LocalPosition: {x: 0.8865199, y: -3.1745706, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -467,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685720980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.65348, y: 2.0054293, z: 1.1247435}
+  m_LocalPosition: {x: -19.28, y: 0.48, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -635,7 +635,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796590509}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.20652, y: -9.58, z: 1.1247435}
+  m_LocalPosition: {x: 8.20652, y: -9.58, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -893,7 +893,7 @@ MonoBehaviour:
   - enemiesAndSpawnParameters:
     - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
       numberOfEnemies: 1
-    minMaxTimeBetweenSpawns: {x: 0, y: 6}
+    minMaxTimeBetweenSpawns: {x: 0, y: 0}
     maxEnemiesSpawned: 1
     timeBeforeStartingWave: 5
     orthoSizeToZoomOutAtStart: 0
@@ -902,7 +902,16 @@ MonoBehaviour:
   - enemiesAndSpawnParameters:
     - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
       numberOfEnemies: 1
-    minMaxTimeBetweenSpawns: {x: 0, y: 6}
+    minMaxTimeBetweenSpawns: {x: 0, y: 0}
+    maxEnemiesSpawned: 1
+    timeBeforeStartingWave: 5
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
+      numberOfEnemies: 1
+    minMaxTimeBetweenSpawns: {x: 0, y: 0}
     maxEnemiesSpawned: 1
     timeBeforeStartingWave: 5
     orthoSizeToZoomOutAtStart: 1
@@ -951,7 +960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015342340}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.93848, y: -3.169571, z: 1.1247435}
+  m_LocalPosition: {x: -13.93848, y: -3.169571, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1067,7 +1076,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145499367}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.15348, y: -9.59, z: 1.1247435}
+  m_LocalPosition: {x: -19.15348, y: -9.59, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1307,7 +1316,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847983793}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.618481, y: -7.3945704, z: 1.1247435}
+  m_LocalPosition: {x: -11.618481, y: -7.3945704, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1383,7 +1392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029151369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.04152, y: -5.3345704, z: 1.1247435}
+  m_LocalPosition: {x: 3.04152, y: -5.3345704, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
