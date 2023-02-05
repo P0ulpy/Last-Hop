@@ -49,14 +49,13 @@ public class Bullet : MonoBehaviour
         var position = transform.position;
         var direction = (_target - position).normalized;
         transform.position = position + (direction * (speed * Time.deltaTime));
-        
-        if(_target == _shootOrigin && Vector3.Distance(position, _target) < 0.1f)
-            Explode();
     }
 
     public void Deflect()
     {
         Core.GameManager.Instance.PlaySoundRenvoieProjectile();
+        
+        gameObject.GetComponent<CircleCollider2D>().isTrigger = true;
 
         _target = _shootOrigin;
         _isInDeflect = true;
@@ -67,6 +66,7 @@ public class Bullet : MonoBehaviour
         if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
         {
             player.TakeDamage(damages);
+            Explode();
         }
         else if(col.CompareTag("Boss") && col.TryGetComponent(out Boss boss))
         {
@@ -79,7 +79,6 @@ public class Bullet : MonoBehaviour
         {
             if (_isInDeflect) return;
             Deflect();
-            return;
         }
         else
         {

@@ -1435,7 +1435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waves:
   - enemiesAndSpawnParameters:
-    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
       numberOfEnemies: 5
     minMaxTimeBetweenSpawns: {x: 1, y: 1.5}
     maxEnemiesSpawned: 2
@@ -1495,6 +1495,19 @@ MonoBehaviour:
     - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
       numberOfEnemies: 5
     minMaxTimeBetweenSpawns: {x: 1.8, y: 2.2}
+    maxEnemiesSpawned: 7
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 15
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 9
+    - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
+      numberOfEnemies: 5
+    minMaxTimeBetweenSpawns: {x: 1.5, y: 2}
     maxEnemiesSpawned: 8
     timeBeforeStartingWave: 2
     orthoSizeToZoomOutAtStart: 1
