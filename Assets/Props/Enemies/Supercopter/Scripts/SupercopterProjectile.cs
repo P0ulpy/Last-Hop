@@ -95,10 +95,11 @@ namespace Props.Enemies.Supercopter
             }
             if (col.CompareTag("Deflector"))
             {
+                if (_isInDeflect) return;
                 Deflect(transform.position);
                 return;
             }
-
+            if(_isInDeflect)return;
             Explode();
         }
         

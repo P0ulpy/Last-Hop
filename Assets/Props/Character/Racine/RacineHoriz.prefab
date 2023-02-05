@@ -133,10 +133,9 @@ MonoBehaviour:
   racineVerticale: {fileID: 4770732026924570181, guid: b09e114ff7a751f4d8c6651cd2a88c63, type: 3}
   _rootSprite: {fileID: 1424768619760992973}
   _Mask: {fileID: 3215406057182961271}
-  _rootVirage: {fileID: 4874499144321187743, guid: ed1899c97ee31e54eb623619164ba23a, type: 3}
   speed: 10
   hauteur: 0
-  durationComeBack: 0.5
+  durationComeBack: 0.2
 --- !u!1 &2357168882603754292
 GameObject:
   m_ObjectHideFlags: 0
