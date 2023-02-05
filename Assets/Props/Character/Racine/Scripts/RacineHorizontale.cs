@@ -5,6 +5,7 @@ public class RacineHorizontale : MonoBehaviour
 {
      public enum Direction {Right, Left};
     [SerializeField] private GameObject racineVerticale;
+    [SerializeField] private GameObject explosionGroundFx;
     [SerializeField] private SpriteRenderer _rootSprite;
     [SerializeField] private GameObject _Mask;
     public Animator _animator;
@@ -55,6 +56,9 @@ public class RacineHorizontale : MonoBehaviour
         //Instantiate(_rootVirage, _Mask.transform.position, Quaternion.identity);
         var racineVerticalevar = Instantiate(racineVerticale, new Vector3(_Mask.transform.position.x ,hauteur,0) , Quaternion.identity)
             .GetComponent<RacineVerticale>();
+
+        if (explosionGroundFx != null)
+            Instantiate(explosionGroundFx, new Vector3(_Mask.transform.position.x, hauteur, 0), explosionGroundFx.transform.rotation);
         
         racineVerticalevar.OnRetract += () =>
         {
