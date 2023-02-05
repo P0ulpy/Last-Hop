@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f83b55cd83823541b02bd49c9a65ce2, type: 3}
+  m_Name: AE_RacineUp
+  m_EditorClassIdentifier: 
+  soundName: AE_RacineUp
+  audioSource: {fileID: 0}
+  audioClips:
+  - {fileID: 8300000, guid: 23a3c46703f9dea47b185332472d1da3, type: 3}
+  - {fileID: 8300000, guid: 89889093fd0223f46a659d8257784bf1, type: 3}
+  - {fileID: 8300000, guid: 9af9f4ab600780b4cb0010d25ce049a0, type: 3}
+  volume: 0.419
+  pitch: 1
+  volumeVariation: 0
+  pitchVariation: 0.1
+  neverPlayTheSame: 1
+  isLooping: 0

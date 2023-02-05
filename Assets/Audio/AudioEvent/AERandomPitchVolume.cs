@@ -18,6 +18,7 @@ public class AERandomPitchVolume : AudioEventAsset
     public float pitchVariation;
 
     public bool neverPlayTheSame;
+    public bool isLooping;
 
     private int oldIndexPlayed = -1;
 
@@ -42,6 +43,7 @@ public class AERandomPitchVolume : AudioEventAsset
         source.clip = audioClips[clipIndexToPlay];
         source.volume = Mathf.Max(0, Random.Range(volume - volumeVariation, volume + volumeVariation));
         source.pitch = Mathf.Max(0.05f, Random.Range(pitch - pitchVariation, pitch + pitchVariation));
+        source.loop = isLooping;
 
         source.PlayOneShot(source.clip);
     }

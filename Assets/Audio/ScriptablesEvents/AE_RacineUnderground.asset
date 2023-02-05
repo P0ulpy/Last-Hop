@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f83b55cd83823541b02bd49c9a65ce2, type: 3}
+  m_Name: AE_RacineUnderground
+  m_EditorClassIdentifier: 
+  soundName: AE_RacineUnderground
+  audioSource: {fileID: 0}
+  audioClips:
+  - {fileID: 8300000, guid: a3495ba656ae6984b95b7118e6fc8d70, type: 3}
+  volume: 0.517
+  pitch: 1
+  volumeVariation: 0
+  pitchVariation: 0
+  neverPlayTheSame: 0
+  isLooping: 0

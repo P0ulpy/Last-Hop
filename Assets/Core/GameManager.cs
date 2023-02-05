@@ -9,6 +9,9 @@ namespace Core
 
         public Player player => _player;
 
+        [SerializeField] private AudioAssets _audioAssets;
+        public AudioAssets _AudioAssets => _audioAssets;
+
         private void Awake()
         {
             _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();

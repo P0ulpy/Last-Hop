@@ -44,7 +44,7 @@ public class AudioAssets : MonoBehaviour
 
     private void Awake()
     {
-        if(audioCategories != null)
+        if (audioCategories != null)
         {
             foreach (var cat in audioCategories)
             {
