@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     private static readonly int EndHoriLeft = Animator.StringToHash("endHoriLeft");
     private static readonly int IsDead = Animator.StringToHash("isDead");
 
+    private int nbrOfAnim = 0;
     private void Update()
     {
         DispatchInputs();
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         if (isRegen)
             UpdateRegen();
     }
+    
 
     private void DispatchInputs()
     {
@@ -122,30 +124,29 @@ public class Player : MonoBehaviour
         {
             case RacineHorizontale.Direction.Left:
             {
-                _animator.SetTrigger(EndHoriLeft);
+                nbrOfAnim--;
+                _animator.Play("leftUPattack");
                 var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StopAimingThenShoot();
                 hasShotLeft = false;
-               // transform.Rotate(new Vector3(0,180,0));
                 racineVerticalScript.OnEndSpell += () =>
                 {
-                    //_animator.SetBool("Attack",false);
-                    //_animator.SetBool("endHori",false);
-                    _animator.SetTrigger(EndRootUpLeft);
+                    if(nbrOfAnim == 0)
+                    _animator.Play("idle");
                     
                 };
             } break;
             case RacineHorizontale.Direction.Right:
             {
-                _animator.SetTrigger(EndHori);
+                nbrOfAnim--;
+                _animator.Play("rootUp");
                 var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StopAimingThenShoot();
                 hasShotRight = false;
                 racineVerticalScript.OnEndSpell += () =>
                 {
-                    //_animator.SetBool("Attack",false);
-                    //_animator.SetBool("endHori",false);
-                    _animator.SetTrigger(EndRootUp);
+                    if(nbrOfAnim == 0)
+                    _animator.Play("idle");
                 };
             } break;
         }
@@ -157,7 +158,10 @@ public class Player : MonoBehaviour
         {
             case RacineHorizontale.Direction.Left:
             {
-                _animator.SetTrigger(AttackLeft);
+                
+               // _animator.SetTrigger(AttackLeft);
+               _animator.Play("leftRootAvance");
+               nbrOfAnim++;
                 cooldownShootLeft.StartCooldown();
                 rootPrefabInstanceLeft = Instantiate(rootPrefab);
 
@@ -167,7 +171,9 @@ public class Player : MonoBehaviour
             } break;
             case RacineHorizontale.Direction.Right:
             {
-                _animator.SetTrigger(Attack);
+                nbrOfAnim++;
+                //_animator.SetTrigger(Attack);
+                _animator.Play("rootavance");
                 cooldownShootRight.StartCooldown();
                 rootPrefabInstanceRight = Instantiate(rootPrefab);
                 var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
@@ -186,7 +192,8 @@ public class Player : MonoBehaviour
         if (healthBar.CurrentVal <= 0)
         {
             OnDeath();
-            _animator.SetBool(IsDead,true);
+            //_animator.SetBool(IsDead,true);
+            _animator.Play("death");
         }
 
         if(!cantTakeDamage)
@@ -196,9 +203,11 @@ public class Player : MonoBehaviour
     IEnumerator DamageSpriteForSeconds()
     {
         cantTakeDamage = true;
-        _animator.SetBool(DamageTaken, true);
+       // _animator.SetBool(DamageTaken, true);
+        _animator.Play("damage");
         yield return new WaitForSeconds(0.3f);
-        _animator.SetBool(DamageTaken, false);
+        //_animator.SetBool(DamageTaken, false);
+        _animator.Play("idle");
         cantTakeDamage = false;
     }
     

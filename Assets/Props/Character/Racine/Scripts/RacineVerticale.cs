@@ -22,6 +22,8 @@ public class RacineVerticale : MonoBehaviour
     private float time;
     private bool hasReset = false;
     private Vector2 screensBounds;
+
+    [SerializeField] private Animator _animator;
     
     
     
@@ -39,6 +41,8 @@ public class RacineVerticale : MonoBehaviour
         //Spawn Virage
         
     }
+    
+    
     
     
     private void Initialise(Direction dir)
