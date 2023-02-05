@@ -14,6 +14,8 @@ public class RunnerEnemie : BaseEnemy
     public Vector2 timingRunRange;
     public Vector2 timingIdleRange;
     public Animator _animator;
+
+    private Collider2D _collider2D;
     
     private float _speed;
     private RunningState _runningState;
@@ -22,6 +24,7 @@ public class RunnerEnemie : BaseEnemy
     // Start is called before the first frame update
     private void Awake()
     {
+        _collider2D = GetComponent<Collider2D>();
         _runningState = new RunningState(Random.Range(timingRunRange.x, timingRunRange.y), Random.Range(timingIdleRange.x, timingIdleRange.y));
     }
 
@@ -73,10 +76,10 @@ public class RunnerEnemie : BaseEnemy
 
     IEnumerator ApplyDamageDelay(Player player)
     {
-        player.TakeDamage(transform.position,damage);
-        GetComponent<Collider2D>().enabled = false;
+        player.TakeDamage(damage);
+        _collider2D.enabled = false;
         yield return new WaitForSeconds(2);
-        GetComponent<Collider2D>().enabled = true;
+        _collider2D.enabled = true;
     }
 }
 

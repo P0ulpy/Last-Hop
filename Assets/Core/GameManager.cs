@@ -1,16 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core
 {
     public class GameManager : MonoBehaviour
     {
         private static GameManager _instance;
-        private Transform _playerTransform;
+        private Player _player;
+
+        public Player player => _player;
 
         private void Start()
         {
-            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             _instance = this;
         }
         
@@ -25,11 +26,6 @@ namespace Core
 
                 return _instance;
             }
-        }
-        
-        public Transform GetPlayerTransform()
-        {
-            return _playerTransform;
         }
     }
 }

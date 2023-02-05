@@ -62,14 +62,14 @@ namespace Props.Enemies.Supercopter
                 _target.x,
                 _target.y + (curveFactor * curveOffset)
             );
-
+            
             transform.position = Vector3.Lerp(_shootOrigin, target, _t);
+            transform.LookAt(_target);
         }
         
         private void Deflect(Vector3 deflectPosition)
         {
             _t = 0f;
-
             speed *= 4;
 
             float direction = Utils.GetXDirection(_shootOrigin, _target);
@@ -87,7 +87,8 @@ namespace Props.Enemies.Supercopter
         {
             if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
             {
-                player.TakeDamage(transform.position,damages);
+                player.TakeDamage(damages);
+                Explode();
             }
             else if (col.CompareTag("Enemy"))
             {

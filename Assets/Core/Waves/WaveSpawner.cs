@@ -28,13 +28,11 @@ public class WaveSpawner : MonoBehaviour
     private int _currentWaveIndex;
     private bool _finishedSpawning;
 
-    private List<Vector3> _allWindowsPointsOccupied;
+    private readonly List<Vector3> _allWindowsPointsOccupied = new ();
 
     private void Awake()
     {
         _currentWaveIndex = _waveIndexToStart;
-
-        _allWindowsPointsOccupied = new List<Vector3>();
     }
 
     private void Start()
@@ -52,12 +50,33 @@ public class WaveSpawner : MonoBehaviour
         StartCoroutine(StartNextWave(_currentWaveIndex, true));
     }
 
+    private void PrepareNextWave()
+    {
+        _currentWaveIndex++;
+        Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
+    }
+
+    private void OnBeforeNextWave(int waveIndex, Wave nextWave)
+    {
+        if (waveIndex != 0)
+        {
+            GameManager.Instance.player.StartRegen();
+        }
+        
+        _cameraMovement.ZoomCameraOut(nextWave.orthoSizeToZoomOutAtStart);
+        
+        //foreach(var spawner in )
+    }
+    
     private IEnumerator StartNextWave(int index, bool ignoreWaiting = false)
     {
         //On attend timeBetweenWaves secondes, puis on lance une vague
 
-        _currentWave = _waves[index]; //Le vague courante est celle désignée par currentWaveIndex
-        _cameraMovement.ZoomCameraOut(_currentWave.orthoSizeToZoomOutAtStart);
+        var nextWave = _waves[index];
+        
+        OnBeforeNextWave(index, nextWave);
+        
+        _currentWave = nextWave; //Le vague courante est celle désignée par currentWaveIndex
 
         if(!ignoreWaiting)
         {
@@ -99,7 +118,7 @@ public class WaveSpawner : MonoBehaviour
                         enemies.RemoveAt(randomEnemyIndex);
                         BaseEnemy spawnedEnemy = Instantiate(randomEnemy, randomSpotToSpawn, Quaternion.identity);
                         
-                        spawnedEnemy.SetTarget(GameManager.Instance.GetPlayerTransform());
+                        spawnedEnemy.SetTarget(GameManager.Instance.player.transform);
 
                         OnWaveAddEnemy(randomSpotToSpawn);
 
@@ -138,12 +157,6 @@ public class WaveSpawner : MonoBehaviour
                 Debug.Log("gg la street t'as gagné");
             }
         }
-    }
-
-    private void PrepareNextWave()
-    {
-        _currentWaveIndex++;
-        Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
     }
 
     /*

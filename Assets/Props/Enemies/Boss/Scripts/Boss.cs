@@ -43,13 +43,11 @@ public class Boss : MonoBehaviour
         _timingShootBarril = Random.Range(0, _timingShootBarrilMax);
     }
     
-    
-
     // Update is called once per frame
     void Update()
     {
         if(target == null)
-            target = GameManager.Instance.GetPlayerTransform();
+            target = GameManager.Instance.player.transform;
         
         if(health <= healthForPhaseTired && _bossStateMachine.State == BossStateMachine.EBossState.Normal)
         {

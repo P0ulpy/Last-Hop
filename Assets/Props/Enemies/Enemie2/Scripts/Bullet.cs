@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
     {
         if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
         {
-            player.TakeDamage(transform.position,damages);
+            player.TakeDamage(damages);
         }
         if (col.CompareTag("Deflector"))
         {

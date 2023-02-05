@@ -16,12 +16,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float fxTravelTimeMax = 1f;
     [SerializeField] private GameObject regenPrefab;
     [SerializeField] private Transform[] regenSpawnPoints;
-    private List<GameObject> fxSpawn;
+    private readonly List<GameObject> fxSpawn = new ();
     private bool isRegen = false;
     private float fxStaticTime = 0f;
     private float fxTravelTime = 0f;
     private float rotationAfterHit;
-    
     
     private GameObject rootPrefabInstanceLeft;
     private GameObject rootPrefabInstanceRight;
@@ -29,13 +28,17 @@ public class Player : MonoBehaviour
     private bool hasShotRight = false;
     private bool cantTakeDamage = false;
     
-    
-    private void Start()
-    {
-        fxSpawn = new List<GameObject>();
-    }
+    private static readonly int DamageTaken = Animator.StringToHash("damageTaken");
 
     private void Update()
+    {
+        DispatchInputs();
+
+        if (isRegen)
+            UpdateRegen();
+    }
+
+    private void DispatchInputs()
     {
         
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
@@ -48,7 +51,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             if(hasShotLeft)
-           ShootUpTheRoot(RacineHorizontale.Direction.Left);
+                ShootUpTheRoot(RacineHorizontale.Direction.Left);
         }
         
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
@@ -61,7 +64,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             if(hasShotRight)
-            ShootUpTheRoot(RacineHorizontale.Direction.Right);
+                ShootUpTheRoot(RacineHorizontale.Direction.Right);
         }
         
 #if UNITY_EDITOR
@@ -70,34 +73,36 @@ public class Player : MonoBehaviour
             StartRegen();
         }
 #endif
+    }
 
-        if (isRegen)
+    private void UpdateRegen()
+    {
+        if(fxStaticTime < fxStaticTimeMax)
+            fxStaticTime += Time.deltaTime;
+        else
         {
-            if(fxStaticTime < fxStaticTimeMax)
-                fxStaticTime += Time.deltaTime;
+            if(fxTravelTime < fxTravelTimeMax)
+            {
+                fxTravelTime += Time.deltaTime;
+                foreach (var fx in fxSpawn)
+                {
+                    fx.transform.position = Vector3.MoveTowards(fx.transform.position, transform.position, Time.deltaTime);
+                }
+            }
             else
             {
-                if(fxTravelTime < fxTravelTimeMax)
+                isRegen = false;
+                fxStaticTime = 0f;
+                fxTravelTime = 0f;
+                
+                foreach (var fx in fxSpawn)
                 {
-                    fxTravelTime += Time.deltaTime;
-                    foreach (var fx in fxSpawn)
-                    {
-                        fx.transform.position = Vector3.MoveTowards(fx.transform.position, transform.position, Time.deltaTime);
-                    }
+                    Destroy(fx);
                 }
-                else
-                {
-                    isRegen = false;
-                    fxStaticTime = 0f;
-                    fxTravelTime = 0f;
-                    foreach (var fx in fxSpawn)
-                    {
-                        Destroy(fx);
-                    }
-                    fxSpawn.Clear();
+                
+                fxSpawn.Clear();
 
-                    healthBar.CurrentVal += healthBar.MaxValue * 0.33f;
-                }
+                healthBar.CurrentVal += healthBar.MaxValue * 0.33f;
             }
         }
     }
@@ -136,13 +141,10 @@ public class Player : MonoBehaviour
                 };
             } break;
         }
-       
-
-                
     }
     public void AimWithTheRoot(RacineHorizontale.Direction dir)
     {
-        
+
         switch (dir)
         {
             case RacineHorizontale.Direction.Left:
@@ -171,31 +173,27 @@ public class Player : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-   
-    }
     
-
-    public void TakeDamage(Vector3 hitPosition,int damage = 10)
+    public void TakeDamage(int damage = 10)
     {
         healthBar.CurrentVal -= damage;
-        if(healthBar.CurrentVal <= 0)_animator.SetBool("isDead",true);
-        /*
-        if (hitPosition.x <= transform.position.x) rotationAfterHit = 0; // Gauche
-        else rotationAfterHit = 180; // Droite*/
+        
+        if (healthBar.CurrentVal <= 0)
+        {
+            OnDeath();
+            _animator.SetBool("isDead",true);
+        }
+
         if(!cantTakeDamage)
-        StartCoroutine(DamageSpriteForSeconds());
-        //if (healthBar.CurrentVal <= 0)
-        //Destroy(gameObject);
+            StartCoroutine(DamageSpriteForSeconds());
     }
     
     IEnumerator DamageSpriteForSeconds()
     {
         cantTakeDamage = true;
-        _animator.SetBool("damageTaken", true);
+        _animator.SetBool(DamageTaken, true);
         yield return new WaitForSeconds(0.3f);
-        _animator.SetBool("damageTaken", false);
+        _animator.SetBool(DamageTaken, false);
         cantTakeDamage = false;
     }
     
@@ -205,8 +203,21 @@ public class Player : MonoBehaviour
         isRegen = true;
         foreach (var spawnPoint in regenSpawnPoints)
         {
-            var fx = Instantiate(regenPrefab, spawnPoint.position, Quaternion.identity);
-            fxSpawn.Add(fx);
+            fxSpawn.Add(
+                Instantiate(regenPrefab, spawnPoint.position, Quaternion.identity)
+            );
         }
+    }
+
+    private void OnDeath()
+    {
+        
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+        foreach(var fx in fxSpawn)
+            Destroy(fx);
     }
 }
