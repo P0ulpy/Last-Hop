@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -19,8 +20,10 @@ public class Player : MonoBehaviour
     private float fxTravelTime = 0f;
     
     
-    private GameObject rootPrefabInstance;
-    private bool hasShot = false;
+    private GameObject rootPrefabInstanceLeft;
+    private GameObject rootPrefabInstanceRight;
+    private bool hasShotLeft = false;
+    private bool hasShotRight = false;
     
     private void Start()
     {
@@ -33,26 +36,26 @@ public class Player : MonoBehaviour
         {
             if (cooldownShootLeft.IsInCooldown)return;
             AimWithTheRoot(RacineHorizontale.Direction.Left);
-            hasShot = true;
+            hasShotLeft = true;
         }
 
         if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            if(hasShot)
-           ShootUpTheRoot();
+            if(hasShotLeft)
+           ShootUpTheRoot(RacineHorizontale.Direction.Left);
         }
         
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (cooldownShootRight.IsInCooldown)return;
             AimWithTheRoot(RacineHorizontale.Direction.Right);
-            hasShot = true;
+            hasShotRight = true;
         }
 
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
         {
-            if(hasShot)
-            ShootUpTheRoot();
+            if(hasShotRight)
+            ShootUpTheRoot(RacineHorizontale.Direction.Right);
         }
         
 #if UNITY_EDITOR
@@ -93,20 +96,47 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ShootUpTheRoot()
+    public void ShootUpTheRoot(RacineHorizontale.Direction dir)
     {
-        var racineVerticalScript = rootPrefabInstance.GetComponent<RacineHorizontale>();
-            racineVerticalScript.StopAimingThenShoot();
-            hasShot = false;
+        switch (dir)
+        {
+            case RacineHorizontale.Direction.Left:
+            {
+                var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
+                racineVerticalScript.StopAimingThenShoot();
+                hasShotLeft = false;
+            } break;
+            case RacineHorizontale.Direction.Right:
+            {
+                var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
+                racineVerticalScript.StopAimingThenShoot();
+                hasShotRight = false;
+            } break;
+        }
+
+                
     }
     public void AimWithTheRoot(RacineHorizontale.Direction dir)
     {
-        if (dir == RacineHorizontale.Direction.Left) cooldownShootLeft.StartCooldown();
-        else if (dir == RacineHorizontale.Direction.Right) cooldownShootRight.StartCooldown();
 
-        rootPrefabInstance = Instantiate(rootPrefab);
-            var racineVerticalScript = rootPrefabInstance.GetComponent<RacineHorizontale>();
-            racineVerticalScript.StartAiming(dir);
+        switch (dir)
+        {
+            case RacineHorizontale.Direction.Left:
+            {
+                cooldownShootLeft.StartCooldown();
+                rootPrefabInstanceLeft = Instantiate(rootPrefab);
+                var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
+                racineVerticalScript.StartAiming(dir);
+            } break;
+            case RacineHorizontale.Direction.Right:
+            {
+                cooldownShootRight.StartCooldown();
+                rootPrefabInstanceRight = Instantiate(rootPrefab);
+                var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
+                racineVerticalScript.StartAiming(dir);
+            } break;
+        }
+
         
     }
     public void TakeDamage(int damage = 10)
