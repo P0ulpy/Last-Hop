@@ -40,7 +40,7 @@ namespace Props.Enemies.Supercopter
         {
             _haveProjectile = true;
             
-            var projectile = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<SupercopterProjectile>();
+            var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<SupercopterProjectile>();
             projectile.Build(transform, _targetTransform, () =>
             {
                 _haveProjectile = false;
