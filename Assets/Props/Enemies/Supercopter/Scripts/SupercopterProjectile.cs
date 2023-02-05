@@ -69,6 +69,8 @@ namespace Props.Enemies.Supercopter
         
         private void Deflect(Vector3 deflectPosition)
         {
+            Core.GameManager.Instance.PlaySoundRenvoieProjectile();
+
             _t = 0f;
             speed *= 4;
 

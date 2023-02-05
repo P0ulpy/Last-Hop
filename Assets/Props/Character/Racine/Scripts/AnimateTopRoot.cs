@@ -20,6 +20,8 @@ public class AnimateTopRoot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        Core.GameManager.Instance.PlaySoundSwoosh();
+
         if (col.transform.position.x < transform.position.x)
         {
             _animator.Play("slapLeft");

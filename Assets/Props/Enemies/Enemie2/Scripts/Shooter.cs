@@ -47,6 +47,8 @@ public class Shooter : BaseEnemy
 
     private void Shoot()
     {
+        Core.GameManager.Instance.PlaySoundTirBullet();
+
         _haveProjectile = true;
         
         var bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);

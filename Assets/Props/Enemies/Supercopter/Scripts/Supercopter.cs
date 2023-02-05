@@ -39,7 +39,9 @@ namespace Props.Enemies.Supercopter
         private void Shoot()
         {
             _haveProjectile = true;
-            
+
+            Core.GameManager.Instance.PlaySoundTirBombe();
+
             var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<SupercopterProjectile>();
             projectile.Build(transform, _targetTransform, () =>
             {

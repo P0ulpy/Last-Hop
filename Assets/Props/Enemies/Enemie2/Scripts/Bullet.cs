@@ -55,6 +55,8 @@ public class Bullet : MonoBehaviour
 
     public void Deflect()
     {
+        Core.GameManager.Instance.PlaySoundRenvoieProjectile();
+
         _target = _shootOrigin;
         _isInDeflect = true;
     }
