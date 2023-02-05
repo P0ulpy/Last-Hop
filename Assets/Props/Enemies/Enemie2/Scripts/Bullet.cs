@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
         _shootOrigin = shooterTransform.position;
         _target = targetTransform.position;
         _onHitCallBack = onHit;
+        transform.right = _target - transform.position;
     }
 
     // Update is called once per frame
