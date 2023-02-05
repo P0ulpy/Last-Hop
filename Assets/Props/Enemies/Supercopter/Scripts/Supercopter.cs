@@ -1,6 +1,8 @@
 ﻿using System;
 using Core;
 using UnityEngine;
+using UnityEngine.Events;
+using Object = UnityEngine.Object;
 
 namespace Props.Enemies.Supercopter
 {
@@ -16,6 +18,8 @@ namespace Props.Enemies.Supercopter
 
         private float _timeSinceLastShoot = 0f;
         private bool _haveProjectile = false;
+        private UnityAction _onHitCallBack;
+        [SerializeField] private GameObject explosionFx;
 
         private void Update()
         {
@@ -84,8 +88,21 @@ namespace Props.Enemies.Supercopter
         {
             if (col.CompareTag("Damager"))
             {
+                Explode();
                 Destroy(gameObject);
             }
+        }
+        
+        public void OnExplode(UnityAction onHit)
+        {
+            _onHitCallBack = onHit;
+        }
+
+        public void Explode()
+        {
+            if(explosionFx != null)
+                Instantiate(explosionFx, transform.position, Quaternion.identity);
+            _onHitCallBack?.Invoke();
         }
     }
 }

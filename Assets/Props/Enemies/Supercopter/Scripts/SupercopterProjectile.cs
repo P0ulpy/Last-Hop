@@ -90,6 +90,13 @@ namespace Props.Enemies.Supercopter
                 player.TakeDamage(damages);
                 Explode();
             }
+            else if(col.CompareTag("Boss") && col.TryGetComponent(out Boss boss))
+            {
+                if (!_isInDeflect) return;
+                
+                boss.TakeDamage(damages);
+                Explode();
+            }
             else if (col.CompareTag("Enemy"))
             {
                 Explode();
