@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RacineHorizontale : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class RacineHorizontale : MonoBehaviour
     [SerializeField] private GameObject racineVerticale;
     [SerializeField] private SpriteRenderer _rootSprite;
     [SerializeField] private GameObject _Mask;
+    public Animator _animator;
 
     public float speed = 6;
     public float hauteur = -1;
@@ -21,7 +23,7 @@ public class RacineHorizontale : MonoBehaviour
     private float startPositionX;
     private bool canMoveNow = false;
     //temp
-   
+    public event UnityAction OnEndSpell;
     // Update is called once per frame
 
     private void Awake()
@@ -64,6 +66,7 @@ public class RacineHorizontale : MonoBehaviour
 
     private void Reset()
     {
+        OnEndSpell?.Invoke();
         _Mask.transform.localPosition = Vector3.Lerp(lastLocation, firstLocation, time / durationComeBack);
         time += Time.deltaTime;
         if (time >= durationComeBack) Destroy(this.gameObject);

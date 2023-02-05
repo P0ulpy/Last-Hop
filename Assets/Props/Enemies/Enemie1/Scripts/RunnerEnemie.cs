@@ -18,7 +18,6 @@ public class RunnerEnemie : BaseEnemy
     private float _speed;
     private RunningState _runningState;
     private bool hitPlayer = false;
-    private bool canDamage = false;
 
     // Start is called before the first frame update
     private void Awake()
@@ -74,7 +73,7 @@ public class RunnerEnemie : BaseEnemy
 
     IEnumerator ApplyDamageDelay(Player player)
     {
-        player.TakeDamage(damage);
+        player.TakeDamage(transform.position,damage);
         GetComponent<Collider2D>().enabled = false;
         yield return new WaitForSeconds(2);
         GetComponent<Collider2D>().enabled = true;

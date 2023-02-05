@@ -87,7 +87,7 @@ namespace Props.Enemies.Supercopter
         {
             if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
             {
-                player.TakeDamage(damages);
+                player.TakeDamage(transform.position,damages);
             }
             else if (col.CompareTag("Enemy"))
             {
