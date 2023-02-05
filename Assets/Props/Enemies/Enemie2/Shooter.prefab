@@ -102,7 +102,7 @@ MonoBehaviour:
   _targetTransform: {fileID: 0}
   prefabBullet: {fileID: 9005946452728089297, guid: f8d780770f2bc624388b509209ab28c4, type: 3}
   shootFrequency: 5
-  shootFrequencyRange: {x: 4, y: 6}
+  shootFrequencyRange: {x: 0.8, y: 1.1}
   explosionFx: {fileID: 2023475133927521424, guid: 4ca28e3366ac745488ac1867b1caeab0, type: 3}
 --- !u!61 &3088232615126621781
 BoxCollider2D:
