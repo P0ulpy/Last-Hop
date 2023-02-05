@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    [SerializeField] private Transform _backgroundTransform;
+    
+    [Header("Config")]
     [SerializeField] private float _durationZoomIn;
     [SerializeField] private float _durationZoomOut;
 
@@ -13,6 +17,9 @@ public class CameraMovement : MonoBehaviour
     private Vector3 _originalCameraPosition;
     private float _originalCameraOrthoSize;
     private bool _isZooming;
+    
+    private Vector3 _originalBackgroundPosition;
+    private float _originalBackgroundScale;
 
     private IEnumerator _CorLerpOrthoSizeCamera;
 
@@ -29,6 +36,9 @@ public class CameraMovement : MonoBehaviour
         _originalCameraPosition = transform.position;
         _originalCameraOrthoSize = _camera.orthographicSize;
         _isZooming = false;
+        
+        _originalBackgroundPosition = _backgroundTransform.position;
+        _originalBackgroundScale = _backgroundTransform.localScale.x;
     }
 
     public void ZoomCameraTo(float targetOrthoSize)
@@ -73,9 +83,23 @@ public class CameraMovement : MonoBehaviour
         float time = 0;
         float startOrthoSize = _camera.orthographicSize;
 
+        float targetBackgroundOrthoSize = targetOrthoSize - _camera.orthographicSize;
+
+        Vector3 startBackgroundPos = _backgroundTransform.position;
+        Vector3 targetBackgroundPos = _backgroundTransform.position + new Vector3(targetBackgroundOrthoSize, targetBackgroundOrthoSize, targetBackgroundOrthoSize);
+        float startBackgroundSize = _backgroundTransform.localScale.x;
+        float targetBackgroundSize = _backgroundTransform.localScale.x + targetBackgroundOrthoSize;
+
         while (time < duration)
         {
-            SetOrthoSizeCamera(Mathf.SmoothStep(startOrthoSize, targetOrthoSize, time / duration));
+            float t = time / duration;
+            
+            SetOrthoSizeCamera(Mathf.SmoothStep(startOrthoSize, targetOrthoSize, t));
+
+            _backgroundTransform.position = Vector3.Lerp(startBackgroundPos, targetBackgroundPos, t);
+
+            float s = Mathf.Lerp(startBackgroundSize, targetBackgroundSize, t);
+            _backgroundTransform.localScale = new Vector3(s, s, s);
 
             time += Time.deltaTime;
             yield return null;
@@ -86,7 +110,7 @@ public class CameraMovement : MonoBehaviour
         _isZooming = false;
     }
 
-    public void SetOrthoSizeCamera(float orthoSize)
+    private void SetOrthoSizeCamera(float orthoSize)
     {
         _camera.orthographicSize = orthoSize;
 
