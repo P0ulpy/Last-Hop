@@ -235,8 +235,7 @@ public class WaveSpawner : MonoBehaviour
                 randomSpawnPoint = _groundSpawnPoints.allTransforms[UnityEngine.Random.Range(0, _groundSpawnPoints.allTransforms.Count)].position;
                 return true;
         }
-
-
+        
         List<Vector3> tempPositionOccupied = new ();
         
         int maxIndex = _windowsSpawnPoints.allTransforms.Count - 1;
@@ -245,24 +244,19 @@ public class WaveSpawner : MonoBehaviour
         if (index > maxIndex)
             index = _windowsSpawnPoints.allTransforms.Count - 1;
 
-        var availableTransformsByEnemyType = new SpawnPointsByEnemyTypes
-        {
-            enemiesSpawningIntoIt = _windowsSpawnPoints.enemiesSpawningIntoIt
-        };
+        var points = new List<Transform>();
 
         for (int i = 0; i <= index; i++)
         {
             var transforms = _windowsSpawnPoints.allTransforms[i];
-            availableTransformsByEnemyType.allTransforms.AddRange(transforms.value);
+            points.AddRange(transforms.value);
         }
         
-        foreach (var t in availableTransformsByEnemyType.allTransforms)
+        foreach (var t in points)
         {
-            int randomIndex = UnityEngine.Random.Range(0, availableTransformsByEnemyType.allTransforms.Count);
+            int randomIndex = UnityEngine.Random.Range(0, points.Count);
             
-            Vector3 newWindowPosition = availableTransformsByEnemyType
-                .allTransforms[randomIndex]
-                .position;
+            Vector3 newWindowPosition = points[randomIndex].position;
             
             if(!tempPositionOccupied     .Contains(newWindowPosition) && 
                !_allWindowsPointsOccupied.Contains(newWindowPosition))
