@@ -56,16 +56,33 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
     }
 
-    private void OnBeforeNextWave(int waveIndex, Wave nextWave)
+    private void OnBeforeNextWave(int nextWaveIndex, Wave nextWave)
     {
-        if (waveIndex != 0)
+        if (nextWaveIndex != 0)
         {
             GameManager.Instance.player.StartRegen();
+            AdjustSpawnPointsPositions(_groundSpawnPoints.allTransforms, nextWave.orthoSizeToZoomOutAtStart);
+            AdjustSpawnPointsPositions(_skySpawnPoints.allTransforms, nextWave.orthoSizeToZoomOutAtStart);
         }
         
         _cameraMovement.ZoomCameraOut(nextWave.orthoSizeToZoomOutAtStart);
-        
-        //foreach(var spawner in )
+    }
+
+    private void AdjustSpawnPointsPositions(IEnumerable<Transform> transforms, float offset)
+    {
+        foreach (var sp in transforms)
+        {
+            var spPosition = sp.position;
+            
+            float direction = - Utils.GetXDirection(spPosition, GameManager.Instance.player.transform.position);
+            
+            sp.position = new Vector2(
+                spPosition.x + ((offset * direction) * 2),
+                spPosition.y
+            );
+            
+            Debug.Log($"{sp.name}, direction({direction}), position({spPosition}), newPosition({sp.position})");
+        }
     }
     
     private IEnumerator StartNextWave(int index, bool ignoreWaiting = false)

@@ -9,7 +9,7 @@ namespace Core
 
         public Player player => _player;
 
-        private void Start()
+        private void Awake()
         {
             _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             _instance = this;
