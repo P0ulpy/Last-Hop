@@ -1078,9 +1078,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1457296384, guid: a18937629c973284ea9fbb7318eb510a, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1601484186632673936, guid: a18937629c973284ea9fbb7318eb510a, type: 3}
       propertyPath: m_Name
       value: MainGameMusicManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1601484186632673937, guid: a18937629c973284ea9fbb7318eb510a, type: 3}
+      propertyPath: _willPlayNewClip
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1601484186632673937, guid: a18937629c973284ea9fbb7318eb510a, type: 3}
+      propertyPath: _currentStringParamIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1601484186632673937, guid: a18937629c973284ea9fbb7318eb510a, type: 3}
+      propertyPath: _durationFadeEndLoopTransition
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1601484186632673938, guid: a18937629c973284ea9fbb7318eb510a, type: 3}
       propertyPath: m_RootOrder
