@@ -63,9 +63,6 @@ public class Bullet : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.tag);
-        Debug.Log(_isInDeflect);
-
         if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
         {
             player.TakeDamage(damages);
