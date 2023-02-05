@@ -29,6 +29,8 @@ public class RacineHorizontale : MonoBehaviour
 
     private void Awake()
     {
+        Core.GameManager.Instance.PlaySoundRacineUnderground();
+
         screensBounds =
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         time = 0;

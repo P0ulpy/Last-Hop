@@ -119,8 +119,6 @@ public class Player : MonoBehaviour
 
     public void ShootUpTheRoot(RacineHorizontale.Direction dir)
     {
-        Core.GameManager.Instance.PlaySoundRacineUnderground();
-
         switch (dir)
         {
             case RacineHorizontale.Direction.Left:
