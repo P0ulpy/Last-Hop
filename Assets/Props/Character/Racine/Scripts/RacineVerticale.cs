@@ -63,7 +63,11 @@ public class RacineVerticale : MonoBehaviour
     void Update()
     {
         if (stopUpdate) return;
-        transform.position = Vector3.Lerp(startVector, endVector, time / duration);
+        
+       // float newY = Mathf.SmoothStep(startVector.y, endVector.y, time / duration);
+
+       // transform.position = new Vector3(startVector.x, newY, startVector.z);
+        transform.position = Vector3.Lerp(startVector, endVector, time/duration);
         time += Time.deltaTime;
         if (time >= duration)
         {
