@@ -8,12 +8,24 @@ public class GameMusicManager : MonoBehaviour
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioSource[] _allAudioSources;
     [SerializeField] private string[] _stringExposedVolumeParams;
+
     [SerializeField] private bool _startMusicAtBeginPlay;
     [SerializeField] private float _durationFadeEndLoopTransition;
 
+    [SerializeField] private int _bossMusicIndex;
+
+    [Header("Whoooo track")]
+    [SerializeField] private AudioSource _asWhoooIntro;
+    [SerializeField] private AudioSource _asWhooLoop;
+    [SerializeField] private string _stringVolumeParamWhooMaster;
+    [SerializeField] private int _whooMusicIndex;
+
+    [Header("Debug")]
+    [SerializeField] private bool _willPlayNewClip; // JUST USE IT FROM THE OUTSIDE TO DEBUG AND FORCE MUSIC CHANGE
+    [SerializeField] private bool _debugStopLoopWhoo;
+
     private int _currentStringParamIndex;
 
-    public bool _willPlayNewClip; // JUST USE IT FROM THE OUTSIDE TO DEBUG AND FORCE MUSIC CHANGE
     private bool _isMusicSystemActive;
 
     private IEnumerator _CorPrepareNextMusicTransition;
@@ -30,10 +42,10 @@ public class GameMusicManager : MonoBehaviour
     {
         _willPlayNewClip = false;
         _isMusicSystemActive = false;
+        _currentStringParamIndex = 0;
 
         _CorPrepareNextMusicTransition = CorPrepareNextMusicTransition(0);
 
-        _currentStringParamIndex = 0;
 
         foreach (var stringParam in _stringExposedVolumeParams)
         {
@@ -62,13 +74,14 @@ public class GameMusicManager : MonoBehaviour
 
         _audioMixer.SetFloat(_stringExposedVolumeParams[0], 1.0f);
 
-        StartPlayingNextLayer();
-
-        double startTime = AudioSettings.dspTime + 0.2;
+        double dspTime = AudioSettings.dspTime;
+        double startTime = 1.0;
         foreach (var audioSource in _allAudioSources)
         {
-            audioSource.PlayScheduled(startTime);
+            audioSource.PlayScheduled(dspTime + startTime);
         }
+
+        StartPlayingNextLayer(GetAudioClipLength(_allAudioSources[_currentStringParamIndex].clip) + startTime - _durationFadeEndLoopTransition);
     }
 
     public void StopMusicSystem()
@@ -88,14 +101,14 @@ public class GameMusicManager : MonoBehaviour
 
     // ======================================
 
-    private void StartPlayingNextLayer()
+    private void StartPlayingNextLayer(double durationBeforePlayNextLayer)
     {
         if (!_isMusicSystemActive || _currentStringParamIndex >= _stringExposedVolumeParams.Length - 1)
         {
             Debug.Log("End of Music");
         }
 
-        double durationBeforePlayNextLayer = GetAudioClipLength(_allAudioSources[_currentStringParamIndex].clip) - _durationFadeEndLoopTransition;
+        UpdateWhooLoop();
 
         StopCoroutine(_CorPrepareNextMusicTransition);
         _CorPrepareNextMusicTransition = CorPrepareNextMusicTransition(durationBeforePlayNextLayer);
@@ -116,7 +129,7 @@ public class GameMusicManager : MonoBehaviour
             _currentStringParamIndex++;
         }
 
-        StartPlayingNextLayer();
+        StartPlayingNextLayer(GetAudioClipLength(_allAudioSources[_currentStringParamIndex].clip));
     }
 
     private IEnumerator CorCrossFadeTransition(string exposedParamFadeOut, string exposedParamFadeIn)
@@ -143,5 +156,34 @@ public class GameMusicManager : MonoBehaviour
     private double GetAudioClipLength(AudioClip audioClip)
     {
         return (double)audioClip.samples / audioClip.frequency;
+    }
+
+    private void UpdateWhooLoop()
+    {
+        // For start vWhoo loop
+        if (_currentStringParamIndex == _whooMusicIndex && !_asWhoooIntro.isPlaying && !_asWhooLoop.isPlaying)
+        {
+            double startTime = 0.2f;
+            double dspTime = AudioSettings.dspTime;
+
+            _audioMixer.SetFloat(_stringVolumeParamWhooMaster, 1.0f);
+
+            _asWhoooIntro.PlayScheduled(dspTime + startTime);
+            _asWhooLoop.PlayScheduled(dspTime + GetAudioClipLength(_asWhoooIntro.clip) + startTime);
+        }
+
+        // For End Whoo Loop
+        if (_currentStringParamIndex == _bossMusicIndex)
+        {
+            _audioMixer.SetFloat(_stringVolumeParamWhooMaster, Mathf.Log10(0.0001f) * 20);
+        }
+    }
+
+    private void Update()
+    {
+        if(_debugStopLoopWhoo)
+        {
+            _audioMixer.SetFloat(_stringVolumeParamWhooMaster, Mathf.Log10(0.0001f) * 20);
+        }
     }
 }

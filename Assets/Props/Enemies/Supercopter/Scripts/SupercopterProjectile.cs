@@ -64,7 +64,7 @@ namespace Props.Enemies.Supercopter
             );
             
             transform.position = Vector3.Lerp(_shootOrigin, target, _t);
-            transform.LookAt(_target);
+            transform.right = (Vector3)target - transform.position;
         }
         
         private void Deflect(Vector3 deflectPosition)
