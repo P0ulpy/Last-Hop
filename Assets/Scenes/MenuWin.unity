@@ -283,8 +283,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4061731586678928134, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
-      propertyPath: creditSceneName
-      value: MenuCredits
+      propertyPath: isWinPanelActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4061731586678928134, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
+      propertyPath: isCreditsPanelActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4061731586678928135, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
       propertyPath: m_Pivot.x
@@ -373,18 +377,6 @@ PrefabInstance:
     - target: {fileID: 4061731586678928187, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
       propertyPath: m_Name
       value: CanvasMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061731586924043404, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061731587006369505, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Credit
-      objectReference: {fileID: 0}
-    - target: {fileID: 4061731587006369505, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainMenuUI, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c3f3d74edcd1444a12b8e4ff1dbdb0, type: 3}

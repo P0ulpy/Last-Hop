@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -184,6 +185,8 @@ public class WaveSpawner : MonoBehaviour
             {
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 Debug.Log("gg la street t'as gagné");
+                
+                SceneManager.LoadScene("MenuWin");
             }
         }
     }
