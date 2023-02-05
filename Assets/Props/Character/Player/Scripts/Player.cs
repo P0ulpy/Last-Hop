@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private bool hasShotLeft = false;
     private bool hasShotRight = false;
     
+    
     private void Start()
     {
         fxSpawn = new List<GameObject>();
