@@ -13,9 +13,12 @@ public class RunnerEnemie : BaseEnemy
     public Vector2 speedRange;
     public Vector2 timingRunRange;
     public Vector2 timingIdleRange;
-
+    public Animator _animator;
+    
     private float _speed;
     private RunningState _runningState;
+    private bool hitPlayer = false;
+    private bool canDamage = false;
 
     // Start is called before the first frame update
     private void Awake()
@@ -30,11 +33,16 @@ public class RunnerEnemie : BaseEnemy
     
     private void Update()
     {
+
+        if (hitPlayer)
+        {
+            //StartCoroutine(ApplyDamageDelay(player));
+            return;
+        }
         if (null == _targetTransform)
             return;
-        
         _runningState.AddTiming(Time.deltaTime);
-
+        _animator.SetFloat("speed",_runningState.GetSpeed());
         UpdatePosition();
     }
 
@@ -53,14 +61,23 @@ public class RunnerEnemie : BaseEnemy
     {
         if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
         {
-            player.TakeDamage(damage);
-            Destroy(gameObject);
+            hitPlayer = true;
+            _animator.SetBool("hitPlayer",true);
+            StartCoroutine(ApplyDamageDelay(player));
         }
         
         if (col.CompareTag("Damager"))
         {
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator ApplyDamageDelay(Player player)
+    {
+        player.TakeDamage(damage);
+        GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(2);
+        GetComponent<Collider2D>().enabled = true;
     }
 }
 
@@ -87,6 +104,7 @@ class RunningState
         
         _stateRunning = new Run();
         State = EStateRunning.Run;
+        
     }
 
     public void AddTiming(float time)
@@ -102,7 +120,6 @@ class RunningState
         else
         {
             if (!(timing >= timingIdleMax)) return;
-            
             ChangeState();
             timing = 0;
         }
