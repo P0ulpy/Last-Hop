@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private int damages = 10;
     
+    private bool _isInDeflect = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -46,26 +48,44 @@ public class Bullet : MonoBehaviour
         var position = transform.position;
         var direction = (_target - position).normalized;
         transform.position = position + (direction * (speed * Time.deltaTime));
+        
+        if(_target == _shootOrigin && Vector3.Distance(position, _target) < 1f)
+            Explode();
     }
 
     public void Deflect()
     {
         _target = _shootOrigin;
+        _isInDeflect = true;
     }
     
     private void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log(col.tag);
+        Debug.Log(_isInDeflect);
+
         if (col.CompareTag("Player") && col.TryGetComponent(out Player player))
         {
             player.TakeDamage(damages);
         }
-        if (col.CompareTag("Deflector"))
+        else if(col.CompareTag("Boss") && col.TryGetComponent(out Boss boss))
         {
+            if (!_isInDeflect) return;
+            
+            boss.TakeDamage(damages);
+            Explode();
+        }
+        else if (col.CompareTag("Deflector"))
+        {
+            if (_isInDeflect) return;
             Deflect();
             return;
         }
-
-        Explode();
+        else
+        {
+            Explode();
+        }
+        
     }
     
     private void Explode()

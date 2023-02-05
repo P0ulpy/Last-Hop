@@ -28,13 +28,11 @@ public class WaveSpawner : MonoBehaviour
     private int _currentWaveIndex;
     private bool _finishedSpawning;
 
-    private List<Vector3> _allWindowsPointsOccupied;
+    private readonly List<Vector3> _allWindowsPointsOccupied = new ();
 
     private void Awake()
     {
         _currentWaveIndex = _waveIndexToStart;
-
-        _allWindowsPointsOccupied = new List<Vector3>();
     }
 
     private void Start()
@@ -52,12 +50,62 @@ public class WaveSpawner : MonoBehaviour
         StartCoroutine(StartNextWave(_currentWaveIndex, true));
     }
 
+    private void PrepareNextWave()
+    {
+        _currentWaveIndex++;
+        Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
+    }
+
+    private void OnBeforeNextWave(int nextWaveIndex, Wave nextWave)
+    {
+        if (nextWaveIndex != 0)
+        {
+            GameManager.Instance.player.StartRegen();
+            AdjustSpawnPointsPositions( nextWave.orthoSizeToZoomOutAtStart);
+        }
+        
+        _cameraMovement.ZoomCameraOut(nextWave.orthoSizeToZoomOutAtStart);
+    }
+
+    private void AdjustSpawnPointsPositions(float orthoSizeOffset)
+    {
+        foreach (var sp in _groundSpawnPoints.allTransforms)
+        {
+            var spPosition = sp.position;
+            
+            float direction = - Utils.GetXDirection(spPosition, GameManager.Instance.player.transform.position);
+            float offsetX = (orthoSizeOffset * direction) * 2;
+            
+            sp.position = new Vector2(
+                spPosition.x + offsetX,
+                spPosition.y
+            );
+        }
+        
+        foreach (var sp in _skySpawnPoints.allTransforms)
+        {
+            var spPosition = sp.position;
+            
+            float direction = - Utils.GetXDirection(spPosition, GameManager.Instance.player.transform.position);
+            float offsetX = (orthoSizeOffset * direction) * 2;
+            float offsetY = orthoSizeOffset * 2;
+
+            sp.position = new Vector2(
+                spPosition.x + offsetX,
+                spPosition.y + offsetY
+            );
+        }
+    }
+    
     private IEnumerator StartNextWave(int index, bool ignoreWaiting = false)
     {
         //On attend timeBetweenWaves secondes, puis on lance une vague
 
-        _currentWave = _waves[index]; //Le vague courante est celle désignée par currentWaveIndex
-        _cameraMovement.ZoomCameraOut(_currentWave.orthoSizeToZoomOutAtStart);
+        var nextWave = _waves[index];
+        
+        OnBeforeNextWave(index, nextWave);
+        
+        _currentWave = nextWave; //Le vague courante est celle désignée par currentWaveIndex
 
         if(!ignoreWaiting)
         {
@@ -99,7 +147,7 @@ public class WaveSpawner : MonoBehaviour
                         enemies.RemoveAt(randomEnemyIndex);
                         BaseEnemy spawnedEnemy = Instantiate(randomEnemy, randomSpotToSpawn, Quaternion.identity);
                         
-                        spawnedEnemy.SetTarget(GameManager.Instance.GetPlayerTransform());
+                        spawnedEnemy.SetTarget(GameManager.Instance.player.transform);
 
                         OnWaveAddEnemy(randomSpotToSpawn);
 
@@ -138,12 +186,6 @@ public class WaveSpawner : MonoBehaviour
                 Debug.Log("gg la street t'as gagné");
             }
         }
-    }
-
-    private void PrepareNextWave()
-    {
-        _currentWaveIndex++;
-        Debug.Log("La vague " + (_currentWaveIndex + 1) + " va commencer...");
     }
 
     /*

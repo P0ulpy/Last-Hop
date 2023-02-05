@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
-
+using UnityEngine.Events;
 using Prefab = UnityEngine.GameObject;
 using Random = UnityEngine.Random;
 
@@ -14,6 +14,9 @@ public class Shooter : BaseEnemy
     [Header("Config")]
     [SerializeField] private float shootFrequency = 5f;
     [SerializeField] private Vector2 shootFrequencyRange;
+    
+    private UnityAction _onHitCallBack;
+    [SerializeField] private GameObject explosionFx;
 
     private float _timeSinceLastShoot = 0f;
     private bool _haveProjectile = false;
@@ -57,7 +60,20 @@ public class Shooter : BaseEnemy
     {
         if (col.CompareTag("Damager"))
         {
+            Explode();
             Destroy(gameObject);
         }
+    }
+    
+    public void OnExplode(UnityAction onHit)
+    {
+        _onHitCallBack = onHit;
+    }
+
+    public void Explode()
+    {
+        if(explosionFx != null)
+            Instantiate(explosionFx, transform.position, Quaternion.identity);
+        _onHitCallBack?.Invoke();
     }
 }

@@ -3,26 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class RunnerEnemie : BaseEnemy
 {
+    [SerializeField] private GameObject explosionFx;
+
     [Header("Config")] 
     [SerializeField] private int damage = 20;
     public Vector2 speedRange;
     public Vector2 timingRunRange;
     public Vector2 timingIdleRange;
     public Animator _animator;
+
+    private Collider2D _collider2D;
     
     private float _speed;
     private RunningState _runningState;
     private bool hitPlayer = false;
-    private bool canDamage = false;
+    
+    private UnityAction _onHitCallBack;
+    
+    
 
     // Start is called before the first frame update
     private void Awake()
     {
+        _collider2D = GetComponent<Collider2D>();
         _runningState = new RunningState(Random.Range(timingRunRange.x, timingRunRange.y), Random.Range(timingIdleRange.x, timingIdleRange.y));
     }
 
@@ -65,19 +74,31 @@ public class RunnerEnemie : BaseEnemy
             _animator.SetBool("hitPlayer",true);
             StartCoroutine(ApplyDamageDelay(player));
         }
-        
-        if (col.CompareTag("Damager"))
+        else if (col.CompareTag("Damager"))
         {
+            Explode();
             Destroy(gameObject);
         }
+    }
+    
+    public void OnExplode(UnityAction onHit)
+    {
+        _onHitCallBack = onHit;
+    }
+
+    public void Explode()
+    {
+        if(explosionFx != null)
+            Instantiate(explosionFx, transform.position, Quaternion.identity);
+        _onHitCallBack?.Invoke();
     }
 
     IEnumerator ApplyDamageDelay(Player player)
     {
         player.TakeDamage(damage);
-        GetComponent<Collider2D>().enabled = false;
         yield return new WaitForSeconds(2);
-        GetComponent<Collider2D>().enabled = true;
+        _collider2D.enabled = false;
+        _collider2D.enabled = true;
     }
 }
 

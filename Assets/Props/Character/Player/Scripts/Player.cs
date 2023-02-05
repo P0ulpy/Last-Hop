@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
@@ -8,31 +10,44 @@ public class Player : MonoBehaviour
     [SerializeField] private ProgressBarCooldown cooldownShootRight;
     [SerializeField] private ProgressBarCooldown cooldownShootLeft;
     [SerializeField] private GameObject rootPrefab;
-    
+    [SerializeField] private Animator _animator;
     [Header("Regen")]
     [SerializeField] private float fxStaticTimeMax = 3f;
     [SerializeField] private float fxTravelTimeMax = 1f;
     [SerializeField] private GameObject regenPrefab;
     [SerializeField] private Transform[] regenSpawnPoints;
-    private List<GameObject> fxSpawn;
+    private readonly List<GameObject> fxSpawn = new ();
     private bool isRegen = false;
     private float fxStaticTime = 0f;
     private float fxTravelTime = 0f;
-    
+    private float rotationAfterHit;
     
     private GameObject rootPrefabInstanceLeft;
     private GameObject rootPrefabInstanceRight;
     private bool hasShotLeft = false;
     private bool hasShotRight = false;
+    private bool cantTakeDamage = false;
     
-    
-    private void Start()
-    {
-        fxSpawn = new List<GameObject>();
-    }
+    private static readonly int DamageTaken = Animator.StringToHash("damageTaken");
+    private static readonly int AttackLeft = Animator.StringToHash("AttackLeft");
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int EndRootUp = Animator.StringToHash("endRootUp");
+    private static readonly int EndHori = Animator.StringToHash("endHori");
+    private static readonly int EndRootUpLeft = Animator.StringToHash("endRootUpLeft");
+    private static readonly int EndHoriLeft = Animator.StringToHash("endHoriLeft");
+    private static readonly int IsDead = Animator.StringToHash("isDead");
 
     private void Update()
     {
+        DispatchInputs();
+
+        if (isRegen)
+            UpdateRegen();
+    }
+
+    private void DispatchInputs()
+    {
+        
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (cooldownShootLeft.IsInCooldown)return;
@@ -43,7 +58,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             if(hasShotLeft)
-           ShootUpTheRoot(RacineHorizontale.Direction.Left);
+                ShootUpTheRoot(RacineHorizontale.Direction.Left);
         }
         
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
@@ -56,7 +71,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             if(hasShotRight)
-            ShootUpTheRoot(RacineHorizontale.Direction.Right);
+                ShootUpTheRoot(RacineHorizontale.Direction.Right);
         }
         
 #if UNITY_EDITOR
@@ -65,57 +80,74 @@ public class Player : MonoBehaviour
             StartRegen();
         }
 #endif
+    }
 
-        if (isRegen)
+    private void UpdateRegen()
+    {
+        if(fxStaticTime < fxStaticTimeMax)
+            fxStaticTime += Time.deltaTime;
+        else
         {
-            if(fxStaticTime < fxStaticTimeMax)
-                fxStaticTime += Time.deltaTime;
+            if(fxTravelTime < fxTravelTimeMax)
+            {
+                fxTravelTime += Time.deltaTime;
+                foreach (var fx in fxSpawn)
+                {
+                    fx.transform.position = Vector3.MoveTowards(fx.transform.position, transform.position, Time.deltaTime);
+                }
+            }
             else
             {
-                if(fxTravelTime < fxTravelTimeMax)
+                isRegen = false;
+                fxStaticTime = 0f;
+                fxTravelTime = 0f;
+                
+                foreach (var fx in fxSpawn)
                 {
-                    fxTravelTime += Time.deltaTime;
-                    foreach (var fx in fxSpawn)
-                    {
-                        fx.transform.position = Vector3.MoveTowards(fx.transform.position, transform.position, Time.deltaTime);
-                    }
+                    Destroy(fx);
                 }
-                else
-                {
-                    isRegen = false;
-                    fxStaticTime = 0f;
-                    fxTravelTime = 0f;
-                    foreach (var fx in fxSpawn)
-                    {
-                        Destroy(fx);
-                    }
-                    fxSpawn.Clear();
+                
+                fxSpawn.Clear();
 
-                    healthBar.CurrentVal += healthBar.MaxValue * 0.33f;
-                }
+                healthBar.CurrentVal += healthBar.MaxValue * 0.33f;
             }
         }
     }
 
     public void ShootUpTheRoot(RacineHorizontale.Direction dir)
     {
+        
         switch (dir)
         {
             case RacineHorizontale.Direction.Left:
             {
+                _animator.SetTrigger(EndHoriLeft);
                 var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StopAimingThenShoot();
                 hasShotLeft = false;
+               // transform.Rotate(new Vector3(0,180,0));
+                racineVerticalScript.OnEndSpell += () =>
+                {
+                    //_animator.SetBool("Attack",false);
+                    //_animator.SetBool("endHori",false);
+                    _animator.SetTrigger(EndRootUpLeft);
+                    
+                };
             } break;
             case RacineHorizontale.Direction.Right:
             {
+                _animator.SetTrigger(EndHori);
                 var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StopAimingThenShoot();
                 hasShotRight = false;
+                racineVerticalScript.OnEndSpell += () =>
+                {
+                    //_animator.SetBool("Attack",false);
+                    //_animator.SetBool("endHori",false);
+                    _animator.SetTrigger(EndRootUp);
+                };
             } break;
         }
-
-                
     }
     public void AimWithTheRoot(RacineHorizontale.Direction dir)
     {
@@ -124,36 +156,72 @@ public class Player : MonoBehaviour
         {
             case RacineHorizontale.Direction.Left:
             {
+                _animator.SetTrigger(AttackLeft);
                 cooldownShootLeft.StartCooldown();
                 rootPrefabInstanceLeft = Instantiate(rootPrefab);
+
                 var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StartAiming(dir);
+                // transform.Rotate(new Vector3(0,180,0));
             } break;
             case RacineHorizontale.Direction.Right:
             {
+                _animator.SetTrigger(Attack);
                 cooldownShootRight.StartCooldown();
                 rootPrefabInstanceRight = Instantiate(rootPrefab);
                 var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StartAiming(dir);
-            } break;
-        }
+                
 
-        
+            } break;
+                
+        }
     }
+
     public void TakeDamage(int damage = 10)
     {
         healthBar.CurrentVal -= damage;
-        //if (healthBar.CurrentVal <= 0)
-            //Destroy(gameObject);
+        
+        if (healthBar.CurrentVal <= 0)
+        {
+            OnDeath();
+            _animator.SetBool(IsDead,true);
+        }
+
+        if(!cantTakeDamage)
+            StartCoroutine(DamageSpriteForSeconds());
     }
+    
+    IEnumerator DamageSpriteForSeconds()
+    {
+        cantTakeDamage = true;
+        _animator.SetBool(DamageTaken, true);
+        yield return new WaitForSeconds(0.3f);
+        _animator.SetBool(DamageTaken, false);
+        cantTakeDamage = false;
+    }
+    
 
     public void StartRegen()
     {
         isRegen = true;
         foreach (var spawnPoint in regenSpawnPoints)
         {
-            var fx = Instantiate(regenPrefab, spawnPoint.position, Quaternion.identity);
-            fxSpawn.Add(fx);
+            fxSpawn.Add(
+                Instantiate(regenPrefab, spawnPoint.position, Quaternion.identity)
+            );
         }
+    }
+
+    private void OnDeath()
+    {
+        
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+        foreach(var fx in fxSpawn)
+            Destroy(fx);
     }
 }

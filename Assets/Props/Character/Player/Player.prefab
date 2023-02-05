@@ -201,6 +201,7 @@ MonoBehaviour:
   cooldownShootRight: {fileID: 3332555660744802609}
   cooldownShootLeft: {fileID: 5191883665758106201}
   rootPrefab: {fileID: 1424768619967429185, guid: c106755750395a441ae81d25f42b5451, type: 3}
+  _animator: {fileID: 949577535790406115}
   fxStaticTimeMax: 3
   fxTravelTimeMax: 1
   regenPrefab: {fileID: 8754634981132694823, guid: 6b7ccab25151f024ba4e4e817a2d7361, type: 3}
