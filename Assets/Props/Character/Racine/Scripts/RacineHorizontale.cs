@@ -66,10 +66,14 @@ public class RacineHorizontale : MonoBehaviour
 
     private void Reset()
     {
-        OnEndSpell?.Invoke();
+        
         _Mask.transform.localPosition = Vector3.Lerp(lastLocation, firstLocation, time / durationComeBack);
         time += Time.deltaTime;
-        if (time >= durationComeBack) Destroy(this.gameObject);
+        if (time >= durationComeBack)
+        {
+            OnEndSpell?.Invoke();
+            Destroy(this.gameObject);
+        }
     }
 
     public void StartAiming(Direction myDir)

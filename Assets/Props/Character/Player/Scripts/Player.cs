@@ -104,31 +104,39 @@ public class Player : MonoBehaviour
 
     public void ShootUpTheRoot(RacineHorizontale.Direction dir)
     {
+        
         switch (dir)
         {
             case RacineHorizontale.Direction.Left:
             {
+                _animator.SetTrigger("endHoriLeft");
                 var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StopAimingThenShoot();
                 hasShotLeft = false;
                // transform.Rotate(new Vector3(0,180,0));
                 racineVerticalScript.OnEndSpell += () =>
                 {
-                    _animator.SetBool("endRootUp",true);
+                    //_animator.SetBool("Attack",false);
+                    //_animator.SetBool("endHori",false);
+                    _animator.SetTrigger("endRootUpLeft");
+                    
                 };
             } break;
             case RacineHorizontale.Direction.Right:
             {
+                _animator.SetTrigger("endHori");
                 var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StopAimingThenShoot();
                 hasShotRight = false;
                 racineVerticalScript.OnEndSpell += () =>
                 {
-                    _animator.SetBool("endRootUp",true);
+                    //_animator.SetBool("Attack",false);
+                    //_animator.SetBool("endHori",false);
+                    _animator.SetTrigger("endRootUp");
                 };
             } break;
         }
-        _animator.SetBool("endHori",true);
+       
 
                 
     }
@@ -139,25 +147,27 @@ public class Player : MonoBehaviour
         {
             case RacineHorizontale.Direction.Left:
             {
+                _animator.SetTrigger("AttackLeft");
                 cooldownShootLeft.StartCooldown();
                 rootPrefabInstanceLeft = Instantiate(rootPrefab);
 
                 var racineVerticalScript = rootPrefabInstanceLeft.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StartAiming(dir);
-               
-               // transform.Rotate(new Vector3(0,180,0));
+                // transform.Rotate(new Vector3(0,180,0));
             } break;
             case RacineHorizontale.Direction.Right:
             {
+                _animator.SetTrigger("Attack");
                 cooldownShootRight.StartCooldown();
                 rootPrefabInstanceRight = Instantiate(rootPrefab);
                 var racineVerticalScript = rootPrefabInstanceRight.GetComponent<RacineHorizontale>();
                 racineVerticalScript.StartAiming(dir);
+                
 
             } break;
                 
         }
-        _animator.SetBool("Attack",true);
+        
         
     }
 
