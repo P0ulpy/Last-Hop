@@ -45,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3032342271
+    locked: 0
   - name: EnemyBehindBuilding
     uniqueID: 1006495377
     locked: 0
@@ -53,6 +56,12 @@ TagManager:
     locked: 0
   - name: EnemyInFrontOfBuilding
     uniqueID: 3787604613
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3616844003
+    locked: 0
+  - name: Ground
+    uniqueID: 2278324903
     locked: 0
   - name: Default
     uniqueID: 0
