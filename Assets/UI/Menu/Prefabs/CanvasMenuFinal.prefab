@@ -605,7 +605,7 @@ MonoBehaviour:
   creditsWinPanels: {fileID: 4061731586250662763}
   creditsLosePanels: {fileID: 6878884274689023868}
   menuSceneName: Menu
-  mainGameSceneName: ProtoExploEnemies
+  mainGameSceneName: ValProtoScene
   creditSceneName: Credit
   isCreditsPanelActive: 0
   isWinPanelActive: 0
