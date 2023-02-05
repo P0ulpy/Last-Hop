@@ -913,7 +913,7 @@ MonoBehaviour:
     minMaxTimeBetweenSpawns: {x: 3, y: 6}
     maxEnemiesSpawned: 5
     timeBeforeStartingWave: 0
-    orthoSizeToZoomOutAtStart: 0.25
+    orthoSizeToZoomOutAtStart: 1.25
     CurrentNumSpawnedEnnemies: 0
     CurrentDeadEnemies: 0
   _cameraMovement: {fileID: 951514962}
