@@ -1,5 +1,162 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1001546990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1001546991}
+  - component: {fileID: 1001546992}
+  m_Layer: 0
+  m_Name: Wave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1001546991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001546990}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 265476717557552961}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1001546992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001546990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41671097b1295d24ea0c91718a8758d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waves:
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 5
+    minMaxTimeBetweenSpawns: {x: 1, y: 1.5}
+    maxEnemiesSpawned: 2
+    timeBeforeStartingWave: 1
+    orthoSizeToZoomOutAtStart: 0
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 11
+    minMaxTimeBetweenSpawns: {x: 0.7, y: 1.3}
+    maxEnemiesSpawned: 4
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 9
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 3
+    minMaxTimeBetweenSpawns: {x: 1.2, y: 1.6}
+    maxEnemiesSpawned: 3
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 11
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 7
+    minMaxTimeBetweenSpawns: {x: 1, y: 1.3}
+    maxEnemiesSpawned: 5
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 10
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 5
+    - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
+      numberOfEnemies: 3
+    minMaxTimeBetweenSpawns: {x: 1.4, y: 1.9}
+    maxEnemiesSpawned: 4
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 15
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 9
+    - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
+      numberOfEnemies: 5
+    minMaxTimeBetweenSpawns: {x: 1.8, y: 2.2}
+    maxEnemiesSpawned: 7
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  - enemiesAndSpawnParameters:
+    - enemy: {fileID: 6882579762176995287, guid: d4b09d93e04451f49b2ddc2f6351ae6e, type: 3}
+      numberOfEnemies: 15
+    - enemy: {fileID: 4754151502074098476, guid: 66eb8c676918ef54991bea84571373cb, type: 3}
+      numberOfEnemies: 9
+    - enemy: {fileID: 7471817255788488973, guid: f238f84211caee34681275c227cffeb5, type: 3}
+      numberOfEnemies: 5
+    minMaxTimeBetweenSpawns: {x: 1.5, y: 2}
+    maxEnemiesSpawned: 8
+    timeBeforeStartingWave: 2
+    orthoSizeToZoomOutAtStart: 1
+    CurrentNumSpawnedEnnemies: 0
+    CurrentDeadEnemies: 0
+  _cameraMovement: {fileID: 0}
+  _groundSpawnPoints:
+    enemiesSpawningIntoIt: 00000000
+    allTransforms:
+    - {fileID: 0}
+    - {fileID: 0}
+  _windowsSpawnPoints:
+    enemiesSpawningIntoIt: 01000000
+    allTransforms:
+    - value:
+      - {fileID: 0}
+      - {fileID: 0}
+    - value:
+      - {fileID: 0}
+      - {fileID: 0}
+    - value:
+      - {fileID: 0}
+      - {fileID: 0}
+    - value:
+      - {fileID: 0}
+      - {fileID: 0}
+    - value:
+      - {fileID: 0}
+      - {fileID: 0}
+    - value:
+      - {fileID: 0}
+      - {fileID: 0}
+  _skySpawnPoints:
+    enemiesSpawningIntoIt: 02000000
+    allTransforms:
+    - {fileID: 0}
+    - {fileID: 0}
+  _waveIndexToStart: 0
 --- !u!1 &265476717557552963
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,7 +185,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1001546991}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,7 +204,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aeNormalExplosion: {fileID: 11400000, guid: af2ec7ae7514d7946a6c5e3bc9752135, type: 2}
   aeBigExplosion: {fileID: 11400000, guid: b56d5f49cff76db4cbf9be339302309b, type: 2}
-  aeRacineUnderground: {fileID: 11400000, guid: 88b457a5f1683f84c94c1c384f0d56ed, type: 2}
+  aeRacineUndergroundG: {fileID: 11400000, guid: 1ae394eacb1e08742b51e58d75e10e2a, type: 2}
+  aeRacineUndergroundD: {fileID: 11400000, guid: 88b457a5f1683f84c94c1c384f0d56ed, type: 2}
   aeRacineUp: {fileID: 11400000, guid: c4d560f3ad225094abd9f6787d3b7dd8, type: 2}
   aeFeuillesRacines: {fileID: 11400000, guid: 6e4137a04438afc4eb95286d8fd09622, type: 2}
   aeEnnemiTirBulet: {fileID: 11400000, guid: b42e110ebdaa0924b94464d9dcab7350, type: 2}

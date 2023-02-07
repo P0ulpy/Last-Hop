@@ -17,7 +17,8 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 792b0dac479ec1c4e94189424d91f879, type: 3}
   volume: 1
-  pitch: 1
+  pitch: 0.97
   volumeVariation: 0
-  pitchVariation: 0.05
+  pitchVariation: 0.1
   neverPlayTheSame: 0
+  isLooping: 0

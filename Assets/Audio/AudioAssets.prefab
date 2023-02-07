@@ -56,6 +56,7 @@ MonoBehaviour:
     _audioMixer: {fileID: 24300002, guid: ef602386d82345048841c478f5f948ca, type: 2}
     audioEvents:
     - {fileID: 11400000, guid: 88b457a5f1683f84c94c1c384f0d56ed, type: 2}
+    - {fileID: 11400000, guid: 1ae394eacb1e08742b51e58d75e10e2a, type: 2}
     - {fileID: 11400000, guid: c4d560f3ad225094abd9f6787d3b7dd8, type: 2}
     - {fileID: 11400000, guid: 6e4137a04438afc4eb95286d8fd09622, type: 2}
   - categoryName: Enemies

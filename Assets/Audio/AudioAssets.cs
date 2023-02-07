@@ -42,6 +42,23 @@ public class AudioAssets : MonoBehaviour
         Debug.LogWarning("The sound  you tried to play isn't registered in AudioAssets object");
     }
 
+    public void StopAudioEvent(AudioEventAsset audioEvent)
+    {
+        AudioEventAsset soundToFind;
+
+        foreach (var audioCat in audioCategories)
+        {
+            soundToFind = Array.Find(audioCat.AudioEvents, audioE => audioE == audioEvent);
+            if (soundToFind != null && soundToFind.audioSource.isPlaying)
+            {
+                soundToFind.Stop();
+                return;
+            }
+        }
+
+        Debug.LogWarning("The sound  you tried to play isn't registered in AudioAssets object");
+    }
+
     private void Awake()
     {
         if (audioCategories != null)

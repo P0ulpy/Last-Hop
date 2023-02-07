@@ -13,7 +13,8 @@ namespace Core
 
         [SerializeField] private AudioEventAsset aeNormalExplosion;
         [SerializeField] private AudioEventAsset aeBigExplosion;
-        [SerializeField] private AudioEventAsset aeRacineUnderground;
+        [SerializeField] private AudioEventAsset aeRacineUndergroundG;
+        [SerializeField] private AudioEventAsset aeRacineUndergroundD;
         [SerializeField] private AudioEventAsset aeRacineUp;
         [SerializeField] private AudioEventAsset aeFeuillesRacines;
         [SerializeField] private AudioEventAsset aeEnnemiTirBulet;
@@ -30,7 +31,7 @@ namespace Core
 
             _audioAssets = FindObjectOfType<AudioAssets>();
         }
-        
+
         public static GameManager Instance
         {
             get
@@ -50,14 +51,27 @@ namespace Core
             _audioAssets.PlayAudioEvent(aeFeuillesRacines);
         }
 
-        public void PlaySoundNormalExplosion()   { _audioAssets.PlayAudioEvent(aeNormalExplosion); }
-        public void PlaySoundBigExplosion()      { _audioAssets.PlayAudioEvent(aeBigExplosion); }
-        public void PlaySoundRacineUnderground() { _audioAssets.PlayAudioEvent(aeRacineUnderground); }
-        public void PlaySoundTirBullet()         { _audioAssets.PlayAudioEvent(aeEnnemiTirBomb); }
-        public void PlaySoundTirBombe()          { _audioAssets.PlayAudioEvent(aeEnnemiTirBulet); }
-        public void PlaySoundSwoosh()            {  }
-        public void PlaySoundRenvoieProjectile() 
+        public void PlaySoundRacineUnderground(bool isLeft)
         {
-            _audioAssets.PlayAudioEvent(aeRenvoieProjectile); }
+            _audioAssets.PlayAudioEvent(isLeft ? aeRacineUndergroundG : aeRacineUndergroundD);
+        }
+
+        public void StopSoundRacineUnderground(bool isLeft)
+        {
+            _audioAssets.StopAudioEvent(isLeft ? aeRacineUndergroundG : aeRacineUndergroundD);
+        }
+
+        public void PlaySoundNormalExplosion() { _audioAssets.PlayAudioEvent(aeNormalExplosion); }
+        public void PlaySoundBigExplosion() { _audioAssets.PlayAudioEvent(aeBigExplosion); }
+        public void PlaySoundTirBullet() { _audioAssets.PlayAudioEvent(aeEnnemiTirBomb); }
+        public void PlaySoundTirBombe() { _audioAssets.PlayAudioEvent(aeEnnemiTirBulet); }
+        public void PlaySoundSwoosh()
+        {
+            _audioAssets.PlayAudioEvent(aeSwoosh);
+        }
+        public void PlaySoundRenvoieProjectile()
+        {
+            _audioAssets.PlayAudioEvent(aeRenvoieProjectile);
+        }
     }
 }

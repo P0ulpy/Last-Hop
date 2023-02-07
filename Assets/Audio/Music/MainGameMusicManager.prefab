@@ -711,7 +711,7 @@ MonoBehaviour:
   - Loop6_volume
   - Loop7_volume
   _startMusicAtBeginPlay: 1
-  _durationFadeEndLoopTransition: 1
+  _durationFadeEndLoopTransition: 0.2
   _bossMusicIndex: 6
   _asWhoooIntro: {fileID: 1457296384}
   _asWhooLoop: {fileID: 2138757660}

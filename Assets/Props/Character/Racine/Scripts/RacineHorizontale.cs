@@ -27,10 +27,10 @@ public class RacineHorizontale : MonoBehaviour
     public event UnityAction OnEndSpell;
     // Update is called once per frame
 
+    private Direction _currentDirection;
+
     private void Awake()
     {
-        Core.GameManager.Instance.PlaySoundRacineUnderground();
-
         screensBounds =
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         time = 0;
@@ -63,7 +63,7 @@ public class RacineHorizontale : MonoBehaviour
             Instantiate(explosionGroundFx, new Vector3(_Mask.transform.position.x, hauteur, 0), explosionGroundFx.transform.rotation);
 
         Core.GameManager.Instance.PlaySoundRacineUp();
-
+        Core.GameManager.Instance.StopSoundRacineUnderground(_currentDirection == Direction.Left);
 
         racineVerticalevar.OnRetract += () =>
         {
@@ -90,12 +90,17 @@ public class RacineHorizontale : MonoBehaviour
         if (myDir == Direction.Right)
         {
             canMoveNow = true;
+            Core.GameManager.Instance.PlaySoundRacineUnderground(false);
         }
         else if(myDir == Direction.Left)
         {
             transform.Rotate(new Vector3(0,0,180));
             canMoveNow = true;
+            Core.GameManager.Instance.PlaySoundRacineUnderground(true);
         }
+
+        _currentDirection = myDir;
+
         this.transform.position = new Vector3(0,hauteur,0); 
         startPositionX = _Mask.transform.localPosition.x + transform.position.x;
         firstLocation = new Vector3(startPositionX, hauteur, 0);

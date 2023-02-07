@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour
 
     public void Deflect()
     {
-        Core.GameManager.Instance.PlaySoundRenvoieProjectile();
+        Core.GameManager.Instance.PlaySoundSwoosh();
         
         gameObject.GetComponent<CircleCollider2D>().isTrigger = true;
 

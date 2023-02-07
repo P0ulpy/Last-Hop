@@ -10,11 +10,24 @@ public class AudioEventAsset : AudioEvent
         source.Play();
     }
 
+    public void Stop(AudioSource source)
+    {
+        source.Stop();
+    }
+
     public virtual void Play()
     {
         if(audioSource)
         {
             Play(audioSource);
+        }
+    }
+
+    public virtual void Stop()
+    {
+        if (audioSource)
+        {
+            Stop(audioSource);
         }
     }
 }
