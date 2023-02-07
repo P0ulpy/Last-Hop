@@ -38,7 +38,15 @@ public class Player : MonoBehaviour
     private static readonly int EndHoriLeft = Animator.StringToHash("endHoriLeft");
     private static readonly int IsDead = Animator.StringToHash("isDead");
 
+    private SpriteTintDamage _spriteTintDamage;
+
     private int nbrOfAnim = 0;
+
+    private void Awake()
+    {
+        _spriteTintDamage = GetComponent<SpriteTintDamage>();
+    }
+
     private void Update()
     {
         DispatchInputs();
@@ -204,6 +212,8 @@ public class Player : MonoBehaviour
         cantTakeDamage = true;
        // _animator.SetBool(DamageTaken, true);
         _animator.Play("damage");
+        _spriteTintDamage.StartTint();
+        Core.GameManager.Instance.PlaySoundPlayerDamage();
         yield return new WaitForSeconds(0.3f);
         //_animator.SetBool(DamageTaken, false);
         _animator.Play("idle");

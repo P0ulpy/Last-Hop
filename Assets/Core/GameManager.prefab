@@ -212,3 +212,4 @@ MonoBehaviour:
   aeEnnemiTirBomb: {fileID: 11400000, guid: b7cbdc9b95e49cf4fa7030d7381bf07a, type: 2}
   aeSwoosh: {fileID: 11400000, guid: b36d1e292f85210428bace46c58e147a, type: 2}
   aeRenvoieProjectile: {fileID: 11400000, guid: 96b5004494c0afb4485df82187781768, type: 2}
+  aePlayerDamage: {fileID: 11400000, guid: 2cfe2ba9d4d690d4dbd12106c2f22ac7, type: 2}

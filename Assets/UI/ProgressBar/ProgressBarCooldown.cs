@@ -10,9 +10,12 @@ public class ProgressBarCooldown : ProgressBar
     private bool isInCooldown;
     public bool IsInCooldown => isInCooldown;
 
+    private Animator _animator;
+
     protected override void Start()
     {
         ResetCooldown();
+        _animator = GetComponent<Animator>();
     }
 
     /* Use this to start the cooldown */
@@ -50,6 +53,8 @@ public class ProgressBarCooldown : ProgressBar
 
             yield return null;
         }
+
+        _animator.SetTrigger("endCD");
     }
 
     protected override void UpdateValue()

@@ -26,17 +26,14 @@ public class CameraMovement : MonoBehaviour
     private void Awake()
     {
         _CorLerpOrthoSizeCamera = CorLerpOrthoSizeCamera(0, 0);
-    }
 
-    private void Start()
-    {
         _camera = GetComponent<Camera>();
         _screenShake = GetComponent<ScreenShake>();
 
         _originalCameraPosition = transform.position;
         _originalCameraOrthoSize = _camera.orthographicSize;
         _isZooming = false;
-        
+
         _originalBackgroundPosition = _backgroundTransform.position;
         _originalBackgroundScale = _backgroundTransform.localScale.x;
     }

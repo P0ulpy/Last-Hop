@@ -52,6 +52,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: af2ec7ae7514d7946a6c5e3bc9752135, type: 2}
     - {fileID: 11400000, guid: b56d5f49cff76db4cbf9be339302309b, type: 2}
     - {fileID: 11400000, guid: b36d1e292f85210428bace46c58e147a, type: 2}
+    - {fileID: 11400000, guid: 2cfe2ba9d4d690d4dbd12106c2f22ac7, type: 2}
+    - {fileID: 11400000, guid: 96b5004494c0afb4485df82187781768, type: 2}
   - categoryName: Racine
     _audioMixer: {fileID: 24300002, guid: ef602386d82345048841c478f5f948ca, type: 2}
     audioEvents:

@@ -21,6 +21,7 @@ namespace Core
         [SerializeField] private AudioEventAsset aeEnnemiTirBomb;
         [SerializeField] private AudioEventAsset aeSwoosh;
         [SerializeField] private AudioEventAsset aeRenvoieProjectile;
+        [SerializeField] private AudioEventAsset aePlayerDamage;
 
 
         private void Awake()
@@ -60,6 +61,8 @@ namespace Core
         {
             _audioAssets.StopAudioEvent(isLeft ? aeRacineUndergroundG : aeRacineUndergroundD);
         }
+
+        public void PlaySoundPlayerDamage() { _audioAssets.PlayAudioEvent(aePlayerDamage); }
 
         public void PlaySoundNormalExplosion() { _audioAssets.PlayAudioEvent(aeNormalExplosion); }
         public void PlaySoundBigExplosion() { _audioAssets.PlayAudioEvent(aeBigExplosion); }

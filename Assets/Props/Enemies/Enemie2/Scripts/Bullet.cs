@@ -80,11 +80,16 @@ public class Bullet : MonoBehaviour
             if (_isInDeflect) return;
             Deflect();
         }
+        else if(col.CompareTag("Damager"))
+        {
+            if (_isInDeflect) return;
+            Explode();
+        }
         else
         {
             Explode();
         }
-        
+
     }
     
     private void Explode()

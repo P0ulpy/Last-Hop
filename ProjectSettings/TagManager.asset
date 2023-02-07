@@ -12,6 +12,7 @@ TagManager:
   - Deflector
   - Damager
   - Boss
+  - RacineVerticale
   layers:
   - Default
   - TransparentFX
